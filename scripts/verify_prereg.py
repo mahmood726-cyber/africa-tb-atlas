@@ -21,7 +21,14 @@ def main() -> int:
                     help="Root dir for relpaths in manifest")
     args = ap.parse_args()
 
-    manifest = json.loads(args.manifest.read_text())
+    try:
+        manifest = json.loads(args.manifest.read_text())
+    except FileNotFoundError:
+        print(f"ERROR: manifest not found: {args.manifest}", file=sys.stderr)
+        return 1
+    except json.JSONDecodeError as e:
+        print(f"ERROR: manifest is invalid JSON: {e}", file=sys.stderr)
+        return 1
     drift = []
     for relpath, expected in manifest.items():
         p = args.root / relpath

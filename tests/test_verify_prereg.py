@@ -36,4 +36,17 @@ def test_verify_prereg_fails_on_drift(tmp_path: Path):
         capture_output=True, text=True
     )
     assert result.returncode == 1
-    assert "DRIFT" in result.stdout or "DRIFT" in result.stderr
+    assert "DRIFT" in result.stderr
+
+
+def test_verify_prereg_fails_on_missing_file(tmp_path: Path):
+    manifest = tmp_path / "prereg_manifest.json"
+    manifest.write_text(json.dumps({"does_not_exist.md": "deadbeef" * 8}), encoding="utf-8")
+    repo_root = Path(__file__).parent.parent
+    result = subprocess.run(
+        ["python", str(repo_root / "scripts/verify_prereg.py"),
+         "--manifest", str(manifest), "--root", str(tmp_path)],
+        capture_output=True, text=True
+    )
+    assert result.returncode == 1
+    assert "MISSING" in result.stderr
