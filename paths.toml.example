@@ -1,0 +1,7 @@
+# Local-only paths to off-repo snapshots. Copy to paths.toml; never commit paths.toml.
+
+aact_snapshot_dir = "C:/Users/user/data/aact/2026-05-quarterly/"
+ictrp_snapshot    = "C:/Users/user/data/ictrp/ictrp_2026-05-04.csv"
+pairwise70_index  = "C:/Users/user/data/pairwise70/study_references.parquet"
+cdsr_string_index = "C:/Users/user/data/cdsr/cdsr_string_index.sqlite"
+europe_pmc_cache_dir = "C:/Users/user/data/europe_pmc_cache/"

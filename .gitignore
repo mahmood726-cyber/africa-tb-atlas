@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+.coverage
+
+# Local config (off-repo paths)
+paths.toml
+
+# Off-repo data
+data/processed/
+data/output/
+trials.parquet
+
+# Dev
+.venv/
+.idea/
+.vscode/
