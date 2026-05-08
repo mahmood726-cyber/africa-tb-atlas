@@ -1,0 +1,11 @@
+{
+  "tag": "prereg-v0.0.1",
+  "tag_target_commit": "a9b6485d566c490b6f756915ad43d994af5d8a03",
+  "head_commit_at_prereg": "a9b6485d566c490b6f756915ad43d994af5d8a03",
+  "github_repo": "https://github.com/mahmood726-cyber/africa-tb-atlas",
+  "github_tag_url": "https://github.com/mahmood726-cyber/africa-tb-atlas/releases/tag/prereg-v0.0.1",
+  "created_at": "2026-05-08",
+  "mechanism": "GitHub annotated tag + Internet Archive snapshot",
+  "ia_snapshots": "data/snapshots/internet_archive_prereg.json",
+  "verify_command": "python scripts/verify_prereg.py --manifest data/snapshots/prereg_manifest.json --root ."
+}

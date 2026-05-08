@@ -1,0 +1,34 @@
+{
+  "_meta": {
+    "purpose": "Internet Archive (Wayback) snapshot URLs taken at prereg-v0.0.1 freeze. Each URL is a permanent third-party witness to file content + creation timestamp, paired with the GitHub tag for defense-in-depth. Snapshots created 2026-05-08.",
+    "tag": "prereg-v0.0.1",
+    "created_at": "2026-05-08"
+  },
+  "snapshots": {
+    "github_repo_root": {
+      "source_url": "https://github.com/mahmood726-cyber/africa-tb-atlas",
+      "wayback_url": "https://web.archive.org/web/20260508130013/https://github.com/mahmood726-cyber/africa-tb-atlas",
+      "wayback_timestamp": "20260508130013"
+    },
+    "github_tag_tree": {
+      "source_url": "https://github.com/mahmood726-cyber/africa-tb-atlas/tree/prereg-v0.0.1",
+      "wayback_url": "https://web.archive.org/web/20260508130247/https://github.com/mahmood726-cyber/africa-tb-atlas/tree/prereg-v0.0.1",
+      "wayback_timestamp": "20260508130247"
+    },
+    "spec_md": {
+      "source_url": "https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/spec.md",
+      "wayback_url": "https://web.archive.org/web/20260508130637/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/spec.md",
+      "wayback_timestamp": "20260508130637"
+    },
+    "protocol_md": {
+      "source_url": "https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/protocol.md",
+      "wayback_url": "https://web.archive.org/web/20260508130834/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/protocol.md",
+      "wayback_timestamp": "20260508130834"
+    },
+    "amendments_md": {
+      "source_url": "https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/AMENDMENTS.md",
+      "wayback_url": "https://web.archive.org/web/20260508131106/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/AMENDMENTS.md",
+      "wayback_timestamp": "20260508131106"
+    }
+  }
+}
