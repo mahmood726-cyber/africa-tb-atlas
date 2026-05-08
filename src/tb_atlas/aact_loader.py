@@ -78,20 +78,22 @@ def load_aact(snapshot_dir) -> pd.DataFrame:
     conditions = _load_table(snapshot_dir, "conditions")
     sponsors = _load_table(snapshot_dir, "sponsors")
 
-    # Collapse one-to-many joins to lists
+    # Collapse one-to-many joins to lists.
+    # Sort all list-valued aggregations for byte-stable output (spec §3.2).
+    # AACT row order can drift between releases; downstream filters are order-insensitive.
     interventions_grp = (
         interventions.groupby("nct_id")["name"]
-        .apply(list)
+        .apply(lambda s: sorted(s))
         .rename("interventions")
     )
     countries_grp = (
         facilities.groupby("nct_id")["country"]
-        .apply(lambda s: sorted(set(s)))  # sorted for byte-stability (spec §3.2)
+        .apply(lambda s: sorted(set(s)))
         .rename("countries")
     )
     conditions_grp = (
         conditions.groupby("nct_id")["name"]
-        .apply(list)
+        .apply(lambda s: sorted(set(s)))
         .rename("conditions")
     )
 

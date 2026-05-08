@@ -66,3 +66,15 @@ def test_load_aact_start_date_is_datetime():
     nct1 = df[df.nct_id == "NCT01001"].iloc[0]
     assert isinstance(nct1["start_date"], pd.Timestamp)
     assert nct1["start_date"].year == 2014
+
+
+def test_load_aact_list_columns_are_sorted_for_byte_stability():
+    """Spec §3.2: byte-stable output across runs requires sorted list columns."""
+    df = load_aact(FIXTURE)
+    nct1 = df[df.nct_id == "NCT01001"].iloc[0]
+    # NCT01001 has Bedaquiline + Linezolid; sorted alphabetically.
+    assert nct1["interventions"] == sorted(nct1["interventions"])
+    assert nct1["countries"] == sorted(nct1["countries"])
+    nct2 = df[df.nct_id == "NCT01002"].iloc[0]
+    assert nct2["interventions"] == sorted(nct2["interventions"])
+    assert nct2["conditions"] == sorted(nct2["conditions"])
