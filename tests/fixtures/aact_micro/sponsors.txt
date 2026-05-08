@@ -1,0 +1,6 @@
+nct_id|lead_or_collaborator|name
+NCT01001|lead|TB Alliance
+NCT01002|lead|TB Alliance
+NCT01003|lead|NIH
+NCT01004|lead|GSK
+NCT01005|lead|Janssen

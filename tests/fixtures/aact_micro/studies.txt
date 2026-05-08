@@ -1,0 +1,6 @@
+nct_id|brief_title|start_date|enrollment|overall_status|study_type
+NCT01001|Bdq+Lzd MDR-TB Trial|2014-03-01|150|Completed|Interventional
+NCT01002|Pretomanid Phase 2|2017-06-15|80|Completed|Interventional
+NCT01003|Linezolid Dose-Finding|2019-01-10|180|Recruiting|Interventional
+NCT01004|TB Vaccine M72|2015-09-01|3000|Completed|Interventional
+NCT01005|Old Pre-2012 MDR-TB|2010-05-01|200|Completed|Interventional

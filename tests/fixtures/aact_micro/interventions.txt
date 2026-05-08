@@ -1,0 +1,8 @@
+nct_id|intervention_type|name
+NCT01001|Drug|Bedaquiline
+NCT01001|Drug|Linezolid
+NCT01002|Drug|Pretomanid
+NCT01002|Drug|PA-824
+NCT01003|Drug|Linezolid
+NCT01004|Biological|M72/AS01E vaccine
+NCT01005|Drug|Bedaquiline

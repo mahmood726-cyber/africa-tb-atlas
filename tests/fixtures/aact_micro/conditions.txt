@@ -1,0 +1,6 @@
+nct_id|name
+NCT01001|Multidrug-Resistant Tuberculosis
+NCT01002|Extensively Drug-Resistant Tuberculosis
+NCT01003|MDR-TB
+NCT01004|Tuberculosis, Pulmonary
+NCT01005|MDR Tuberculosis

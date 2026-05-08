@@ -1,0 +1,8 @@
+nct_id|country|city
+NCT01001|South Africa|Cape Town
+NCT01001|United Kingdom|London
+NCT01002|Belarus|Minsk
+NCT01002|South Africa|Johannesburg
+NCT01003|United States|New York
+NCT01004|Kenya|Nairobi
+NCT01005|India|Mumbai
