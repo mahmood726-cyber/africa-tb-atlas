@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Africa TB Atlas — Hidden Evidence Dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font: 14px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif;
+    margin: 0; padding: 0; background: #f8f9fa; color: #1a1a1a;
+  }
+  .banner {
+    background: #1b4a2e; color: #e8f5e9; padding: 24px 32px 20px;
+  }
+  .banner h1 { margin: 0 0 8px; font-size: 1.6em; font-weight: 700; letter-spacing: -0.01em; }
+  .banner .subtitle { margin: 0 0 12px; opacity: 0.85; font-size: 0.97em; }
+  .banner p { margin: 0 0 10px; max-width: 820px; font-size: 0.93em; opacity: 0.9; line-height: 1.6; }
+  .banner a { color: #a5d6a7; }
+  .banner .links { font-size: 0.88em; opacity: 0.8; }
+  .banner .links a { color: #c8e6c9; margin-right: 16px; }
+  .content { max-width: 1100px; margin: 0 auto; padding: 24px 24px 48px; }
+  h2 { font-size: 1.1em; font-weight: 700; color: #1b4a2e; margin: 32px 0 8px;
+       border-bottom: 2px solid #c8e6c9; padding-bottom: 4px; }
+  h3 { font-size: 0.97em; font-weight: 600; color: #333; margin: 20px 0 6px; }
+  .chart-wrap { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px;
+                padding: 20px; margin-bottom: 20px; }
+  .chart-title { font-size: 0.92em; font-weight: 600; color: #444; margin: 0 0 14px; }
+  svg.chart { display: block; overflow: visible; }
+  .legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 10px 0 4px; font-size: 0.84em; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }
+  .methods-note { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px;
+                  padding: 20px; font-size: 0.88em; line-height: 1.7; color: #444; }
+  .methods-note p { margin: 0 0 10px; }
+  .methods-note code { background: #f0f4f0; padding: 1px 5px; border-radius: 3px;
+                       font: 0.95em/1 monospace; }
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+               gap: 12px; margin-bottom: 20px; }
+  .stat-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 6px;
+               padding: 14px 16px; }
+  .stat-val { font-size: 2em; font-weight: 700; color: #1b4a2e; line-height: 1; }
+  .stat-lbl { font-size: 0.82em; color: #666; margin-top: 4px; }
+  .note { font-size: 0.82em; color: #666; margin-top: 8px; }
+  footer { text-align: center; font-size: 0.8em; color: #999; padding: 20px;
+           border-top: 1px solid #e0e0e0; }
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <h1>Africa TB Atlas</h1>
+  <p class="subtitle">Hidden evidence in Africa-recruiting tuberculosis trials — Gate 0 to Gate 3 funnel</p>
+  <p>This atlas quantifies the proportion of Africa-recruiting drug-resistant TB trials (registered on ClinicalTrials.gov / WHO ICTRP) whose evidence reaches Cochrane systematic reviews (Gate 3). Evidence hidden at intermediate gates — results posting (G1), peer publication (G2), Cochrane inclusion (G3) — represents a structural gap between trial conduct and evidence synthesis uptake.</p>
+  <div class="links">
+    <a href="../docs/spec.md">spec.md</a>
+    <a href="../docs/protocol.md">protocol.md</a>
+    <a href="https://github.com/mahmood726-cyber/africa-tb-atlas/releases/tag/prereg-v0.0.1">prereg-v0.0.1</a>
+    <a href="https://github.com/mahmood726-cyber/africa-tb-atlas">GitHub</a>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ── SUMMARY STATS ── -->
+<h2>Summary statistics</h2>
+<div id="stat-grid-container" class="stat-grid"></div>
+
+<!-- ── SANKEY FUNNEL ── -->
+<h2>Sankey funnel — binary site stratification (G0 → G3)</h2>
+<div class="chart-wrap">
+  <p class="chart-title">G0 = registered, G1 = results posted, G2 = peer-published, G3 = in Cochrane. Flows colored by Africa-recruiting status.</p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#2e7d32"></div> Africa-recruiting</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#5c6bc0"></div> Not Africa-recruiting</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#e57373"></div> Invisible (not in Cochrane)</div>
+  </div>
+  <svg id="sankey-svg" class="chart" viewBox="0 0 960 260" width="100%"></svg>
+</div>
+
+<!-- ── BINARY FOREST PLOT ── -->
+<h2>Binary site forest plot — pct_g0_to_g3 by Africa-recruiting status</h2>
+<div class="chart-wrap">
+  <p class="chart-title">Point estimate (square) + 95% CI whiskers. Square size proportional to n_trials.</p>
+  <svg id="binary-forest-svg" class="chart" viewBox="0 0 800 130" width="100%"></svg>
+</div>
+
+<!-- ── THREE-TIER SUB-ANALYSIS ── -->
+<h2>Three-tier sub-analysis (African-led / African-recruiting / non-Africa)</h2>
+<div class="chart-wrap">
+  <p class="chart-title">Same forest format. Note: African-recruiting (n=1) has wide CIs not shown.</p>
+  <svg id="threetier-forest-svg" class="chart" viewBox="0 0 800 160" width="100%"></svg>
+</div>
+
+<!-- ── DRUG-CLASS BREAKDOWN BAR ── -->
+<h2>Drug-class breakdown — pct_g0_to_g3 by regimen class</h2>
+<div class="chart-wrap">
+  <p class="chart-title">Horizontal bars: width = pct_g0_to_g3 x n_trials (area encodes absolute hidden-trial count). Label shows % and n.</p>
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#2e7d32"></div> Trials reaching Cochrane</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#e0e0e0"></div> Trials not in Cochrane</div>
+  </div>
+  <svg id="drug-bar-svg" class="chart" width="100%"></svg>
+</div>
+
+<!-- ── SITE-SHARE SENSITIVITY ── -->
+<h2>Site-share sensitivity check (site_share &ge; 30%)</h2>
+<div class="chart-wrap">
+  <p class="chart-title">Forest plot using site_share_30pct stratification — confirms binary_1site findings.</p>
+  <svg id="siteshare-forest-svg" class="chart" viewBox="0 0 800 130" width="100%"></svg>
+</div>
+
+<!-- ── METHODS NOTE ── -->
+<h2>Methods note</h2>
+<div class="methods-note">
+  <p><strong>Data source.</strong> ClinicalTrials.gov / WHO ICTRP export (fixture-mode: <code>tests/fixtures/atlas_baseline_micro.csv</code>). Atlas generated by the africa-tb-atlas pipeline (preregistered at <code>prereg-v0.0.1</code>). The atlas CSV is committed byte-for-byte and anchored via OpenTimestamps.</p>
+  <p><strong>Stratifications.</strong> Four sensitivity analyses are reported: (1) <code>binary_1site</code> — whether any trial site is in Africa (binary); (2) <code>site_share_30pct</code> — whether &ge;30% of trial sites are African; (3) <code>three_tier</code> — African-led vs African-recruiting vs non-Africa; (4) <code>drug_class</code> — regimen class (BPaL, BPaLM, Bdq-based, linezolid, pretomanid-based, other).</p>
+  <p><strong>Gates.</strong> G0 = registered trial; G1 = results posted on CT.gov; G2 = peer-reviewed publication detected via PubMed / Europe PMC NCT-bridge; G3 = included in a Cochrane systematic review (CDSR match). The primary outcome is <code>pct_g0_to_g3</code> (% of registered trials reaching Cochrane).</p>
+  <p><strong>CIs.</strong> 95% cluster bootstrap confidence intervals (1,000 resamples, trial-level clusters). Undefined CIs (k=1) shown as point-only.</p>
+  <p><strong>Spec &amp; protocol.</strong> See <a href="../docs/spec.md">docs/spec.md</a> and <a href="../docs/protocol.md">docs/protocol.md</a>. Preregistration tag: <a href="https://github.com/mahmood726-cyber/africa-tb-atlas/releases/tag/prereg-v0.0.1">prereg-v0.0.1</a>.</p>
+  <p><strong>Fixture-mode note.</strong> This v0.1.0 dashboard renders the 15-row baseline micro-fixture. Task 27 will refresh with real pipeline output.</p>
+</div>
+
+</div><!-- /.content -->
+
+<footer>
+  Africa TB Atlas v0.1.0 &mdash; fixture-mode dashboard &mdash;
+  <a href="https://github.com/mahmood726-cyber/africa-tb-atlas">github.com/mahmood726-cyber/africa-tb-atlas</a>
+</footer>
+
+<script>
+/* ─── INLINED ATLAS DATA (from tests/fixtures/atlas_baseline_micro.csv) ─── */
+const ATLAS = [
+  {sensitivity:"binary_1site",stratum_key:"africa_recruiting",stratum_value:"False",n_trials:15,n_results_posted:1,n_peer_published:0,n_in_cochrane:0,n_invisible:3,n_participants:1950,n_participants_results_posted:150,n_participants_peer_published:0,n_participants_in_cochrane:0,pct_g0_to_g3:0.0,pct_g0_to_g3_pat:0.0,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.0},
+  {sensitivity:"binary_1site",stratum_key:"africa_recruiting",stratum_value:"True",n_trials:35,n_results_posted:2,n_peer_published:0,n_in_cochrane:9,n_invisible:0,n_participants:7202,n_participants_results_posted:662,n_participants_peer_published:0,n_participants_in_cochrane:2567,pct_g0_to_g3:0.2571428571428571,pct_g0_to_g3_pat:0.3564287697861705,pct_g0_to_g3_ci_lo:0.14285714285714285,pct_g0_to_g3_ci_hi:0.35714285714285715},
+  {sensitivity:"site_share_30pct",stratum_key:"site_share_30pct",stratum_value:"False",n_trials:15,n_results_posted:1,n_peer_published:0,n_in_cochrane:0,n_invisible:3,n_participants:1950,n_participants_results_posted:150,n_participants_peer_published:0,n_participants_in_cochrane:0,pct_g0_to_g3:0.0,pct_g0_to_g3_pat:0.0,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.0},
+  {sensitivity:"site_share_30pct",stratum_key:"site_share_30pct",stratum_value:"True",n_trials:35,n_results_posted:2,n_peer_published:0,n_in_cochrane:9,n_invisible:0,n_participants:7202,n_participants_results_posted:662,n_participants_peer_published:0,n_participants_in_cochrane:2567,pct_g0_to_g3:0.2571428571428571,pct_g0_to_g3_pat:0.3564287697861705,pct_g0_to_g3_ci_lo:0.14285714285714285,pct_g0_to_g3_ci_hi:0.35714285714285715},
+  {sensitivity:"three_tier",stratum_key:"africa_tier",stratum_value:"African-led",n_trials:34,n_results_posted:1,n_peer_published:0,n_in_cochrane:8,n_invisible:0,n_participants:6650,n_participants_results_posted:110,n_participants_peer_published:0,n_participants_in_cochrane:2015,pct_g0_to_g3:0.23529411764705882,pct_g0_to_g3_pat:0.3030075187969925,pct_g0_to_g3_ci_lo:0.0796031746031746,pct_g0_to_g3_ci_hi:0.36243686868686864},
+  {sensitivity:"three_tier",stratum_key:"africa_tier",stratum_value:"African-recruiting",n_trials:1,n_results_posted:1,n_peer_published:0,n_in_cochrane:1,n_invisible:0,n_participants:552,n_participants_results_posted:552,n_participants_peer_published:0,n_participants_in_cochrane:552,pct_g0_to_g3:1.0,pct_g0_to_g3_pat:1.0,pct_g0_to_g3_ci_lo:null,pct_g0_to_g3_ci_hi:null},
+  {sensitivity:"three_tier",stratum_key:"africa_tier",stratum_value:"non-Africa",n_trials:15,n_results_posted:1,n_peer_published:0,n_in_cochrane:0,n_invisible:3,n_participants:1950,n_participants_results_posted:150,n_participants_peer_published:0,n_participants_in_cochrane:0,pct_g0_to_g3:0.0,pct_g0_to_g3_pat:0.0,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.0},
+  {sensitivity:"drug_class",stratum_key:"drug_class",stratum_value:"BPaL",n_trials:11,n_results_posted:1,n_peer_published:0,n_in_cochrane:3,n_invisible:0,n_participants:2380,n_participants_results_posted:110,n_participants_peer_published:0,n_participants_in_cochrane:510,pct_g0_to_g3:0.2727272727272727,pct_g0_to_g3_pat:0.21428571428571427,pct_g0_to_g3_ci_lo:0.125,pct_g0_to_g3_ci_hi:0.38461538461538464},
+  {sensitivity:"drug_class",stratum_key:"drug_class",stratum_value:"BPaLM",n_trials:5,n_results_posted:1,n_peer_published:0,n_in_cochrane:2,n_invisible:0,n_participants:2054,n_participants_results_posted:552,n_participants_peer_published:0,n_participants_in_cochrane:1104,pct_g0_to_g3:0.4,pct_g0_to_g3_pat:0.5374878286270691,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.8},
+  {sensitivity:"drug_class",stratum_key:"drug_class",stratum_value:"Bdq monotherapy/pair",n_trials:3,n_results_posted:0,n_peer_published:0,n_in_cochrane:0,n_invisible:0,n_participants:160,n_participants_results_posted:0,n_participants_peer_published:0,n_participants_in_cochrane:0,pct_g0_to_g3:0.0,pct_g0_to_g3_pat:0.0,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.0},
+  {sensitivity:"drug_class",stratum_key:"drug_class",stratum_value:"Bdq+other-companion",n_trials:13,n_results_posted:1,n_peer_published:0,n_in_cochrane:1,n_invisible:2,n_participants:2863,n_participants_results_posted:150,n_participants_peer_published:0,n_participants_in_cochrane:588,pct_g0_to_g3:0.07692307692307693,pct_g0_to_g3_pat:0.20537897310513448,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.23076923076923078},
+  {sensitivity:"drug_class",stratum_key:"drug_class",stratum_value:"Lzd dose-finding",n_trials:6,n_results_posted:0,n_peer_published:0,n_in_cochrane:2,n_invisible:0,n_participants:760,n_participants_results_posted:0,n_participants_peer_published:0,n_participants_in_cochrane:290,pct_g0_to_g3:0.3333333333333333,pct_g0_to_g3_pat:0.3815789473684211,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.6666666666666666},
+  {sensitivity:"drug_class",stratum_key:"drug_class",stratum_value:"Pa monotherapy/pair",n_trials:4,n_results_posted:0,n_peer_published:0,n_in_cochrane:0,n_invisible:0,n_participants:185,n_participants_results_posted:0,n_participants_peer_published:0,n_participants_in_cochrane:0,pct_g0_to_g3:0.0,pct_g0_to_g3_pat:0.0,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.0},
+  {sensitivity:"drug_class",stratum_key:"drug_class",stratum_value:"Pa+Lzd (no Bdq)",n_trials:7,n_results_posted:0,n_peer_published:0,n_in_cochrane:1,n_invisible:0,n_participants:650,n_participants_results_posted:0,n_participants_peer_published:0,n_participants_in_cochrane:75,pct_g0_to_g3:0.14285714285714285,pct_g0_to_g3_pat:0.11538461538461539,pct_g0_to_g3_ci_lo:0.0,pct_g0_to_g3_ci_hi:0.42857142857142855},
+  {sensitivity:"drug_class",stratum_key:"drug_class",stratum_value:"other",n_trials:1,n_results_posted:0,n_peer_published:0,n_in_cochrane:0,n_invisible:1,n_participants:100,n_participants_results_posted:0,n_participants_peer_published:0,n_participants_in_cochrane:0,pct_g0_to_g3:0.0,pct_g0_to_g3_pat:0.0,pct_g0_to_g3_ci_lo:null,pct_g0_to_g3_ci_hi:null}
+];
+
+/* ─── PALETTE ─── */
+const COL = {
+  africa:    "#2e7d32",
+  nonAfrica: "#5c6bc0",
+  invisible: "#e57373",
+  bar:       "#2e7d32",
+  barBg:     "#e0e0e0",
+  axis:      "#999",
+  text:      "#222",
+  ci:        "#555"
+};
+
+/* ─── HELPERS ─── */
+function svgEl(tag, attrs) {
+  const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, v);
+  return el;
+}
+function pct(v) { return (isFinite(v) ? v : 0) * 100; }
+function fmt1(v) { return isFinite(v) ? (v * 100).toFixed(1) + "%" : "N/A"; }
+
+/* ─── SUMMARY STATS ─── */
+(function buildStats() {
+  const africaRow = ATLAS.find(r => r.sensitivity === "binary_1site" && r.stratum_value === "True");
+  const nonRow    = ATLAS.find(r => r.sensitivity === "binary_1site" && r.stratum_value === "False");
+  if (!africaRow || !nonRow) return;
+  const total = africaRow.n_trials + nonRow.n_trials;
+  const totalCochrane = africaRow.n_in_cochrane + nonRow.n_in_cochrane;
+  const stats = [
+    { val: total,                          lbl: "Registered trials (G0)" },
+    { val: africaRow.n_trials,             lbl: "Africa-recruiting (G0)" },
+    { val: africaRow.n_in_cochrane,        lbl: "Africa trials in Cochrane (G3)" },
+    { val: fmt1(africaRow.pct_g0_to_g3),  lbl: "% Africa-recruiting reaching G3" },
+    { val: nonRow.n_in_cochrane,           lbl: "Non-Africa trials in Cochrane (G3)" },
+    { val: fmt1(nonRow.pct_g0_to_g3),     lbl: "% non-Africa reaching G3" }
+  ];
+  const grid = document.getElementById("stat-grid-container");
+  stats.forEach(function(s) {
+    const card = document.createElement("div");
+    card.className = "stat-card";
+    card.innerHTML = '<div class="stat-val">' + s.val + '</div><div class="stat-lbl">' + s.lbl + '</div>';
+    grid.appendChild(card);
+  });
+})();
+
+/* ─── SANKEY FUNNEL ─── */
+(function buildSankey() {
+  const svg = document.getElementById("sankey-svg");
+  const W = 960, H = 260;
+  const africaRow = ATLAS.find(r => r.sensitivity === "binary_1site" && r.stratum_value === "True");
+  const nonRow    = ATLAS.find(r => r.sensitivity === "binary_1site" && r.stratum_value === "False");
+  if (!africaRow || !nonRow) return;
+
+  /* Gate totals — Africa stratum only for the funnel */
+  const gates = [
+    { label: "G0\nRegistered",     nA: africaRow.n_trials,           nN: nonRow.n_trials },
+    { label: "G1\nResults posted", nA: africaRow.n_results_posted,   nN: nonRow.n_results_posted },
+    { label: "G2\nPeer-published", nA: africaRow.n_peer_published,   nN: nonRow.n_peer_published },
+    { label: "G3\nIn Cochrane",    nA: africaRow.n_in_cochrane,      nN: nonRow.n_in_cochrane }
+  ];
+
+  const BAR_W = 100;
+  const SPACING = (W - 4 * BAR_W) / 5;  /* gap between bars */
+  const MAX_H = 160;
+  const TOP = 20;
+  const LABEL_Y = H - 14;
+
+  const maxN = Math.max(gates[0].nA + gates[0].nN, 1);
+
+  gates.forEach(function(g, i) {
+    const x = SPACING + i * (BAR_W + SPACING);
+    const totalH = ((g.nA + g.nN) / maxN) * MAX_H;
+    const africaH = (g.nA / maxN) * MAX_H;
+    const nonH = totalH - africaH;
+    const barTop = TOP + (MAX_H - totalH);
+
+    /* non-africa portion (bottom) */
+    if (nonH > 0) {
+      const r = svgEl("rect", { x, y: barTop + africaH, width: BAR_W, height: Math.max(nonH, 1), fill: COL.nonAfrica, rx: 2 });
+      svg.appendChild(r);
+    }
+    /* africa portion (top of bar) */
+    if (africaH > 0) {
+      const r = svgEl("rect", { x, y: barTop, width: BAR_W, height: Math.max(africaH, 1), fill: COL.africa, rx: 2 });
+      svg.appendChild(r);
+    }
+
+    /* count label */
+    const tot = g.nA + g.nN;
+    const t = svgEl("text", { x: x + BAR_W / 2, y: barTop - 6, "text-anchor": "middle",
+                                "font-size": 13, "font-weight": "bold", fill: COL.text });
+    t.textContent = tot;
+    svg.appendChild(t);
+
+    /* breakdown label */
+    const t2 = svgEl("text", { x: x + BAR_W / 2, y: barTop - 20, "text-anchor": "middle",
+                                 "font-size": 11, fill: "#666" });
+    t2.textContent = "A:" + g.nA + " N:" + g.nN;
+    svg.appendChild(t2);
+
+    /* gate label (2 lines) */
+    const lines = g.label.split("\n");
+    lines.forEach(function(line, li) {
+      const tl = svgEl("text", { x: x + BAR_W / 2, y: LABEL_Y + li * 14, "text-anchor": "middle",
+                                   "font-size": 12, fill: COL.text });
+      tl.textContent = line;
+      svg.appendChild(tl);
+    });
+
+    /* flow arrow to next gate */
+    if (i < gates.length - 1) {
+      const nextX = x + BAR_W + SPACING;
+      const y1 = barTop + totalH / 2;
+      const nextG = gates[i + 1];
+      const nextTotalH = ((nextG.nA + nextG.nN) / maxN) * MAX_H;
+      const nextTop = TOP + (MAX_H - nextTotalH);
+      const y2 = nextTop + nextTotalH / 2;
+      const mx = x + BAR_W + SPACING / 2;
+      const path = svgEl("path", {
+        d: "M" + (x + BAR_W) + "," + y1 + " C" + mx + "," + y1 + " " + mx + "," + y2 + " " + nextX + "," + y2,
+        stroke: "#bbb", "stroke-width": 1.5, fill: "none", "stroke-dasharray": "4,3", opacity: 0.7
+      });
+      svg.appendChild(path);
+    }
+  });
+
+  /* invisible flow label */
+  const invRow = ATLAS.find(r => r.sensitivity === "binary_1site" && r.stratum_value === "True");
+  const invText = svgEl("text", { x: W - 8, y: TOP + MAX_H + 10, "text-anchor": "end",
+                                    "font-size": 11, fill: COL.invisible });
+  invText.textContent = "Invisible (Africa, n=" + (invRow ? invRow.n_invisible : 0) + ")";
+  svg.appendChild(invText);
+})();
+
+/* ─── FOREST PLOT HELPER ─── */
+function buildForest(svgId, rows, labelFn, colorFn, viewH) {
+  const svg = document.getElementById(svgId);
+  if (!svg || !rows.length) return;
+
+  const LEFT = 200, RIGHT = 40, AXIS_X_START = LEFT, AXIS_X_END = 760 - RIGHT;
+  const AXIS_W = AXIS_X_END - AXIS_X_START;
+  const ROW_H = 34, TOP_PAD = 20, TICK_Y = TOP_PAD + rows.length * ROW_H + 8;
+
+  /* axis ticks: 0%, 25%, 50%, 75%, 100% */
+  const ticks = [0, 0.25, 0.5, 0.75, 1.0];
+  ticks.forEach(function(t) {
+    const tx = AXIS_X_START + t * AXIS_W;
+    const line = svgEl("line", { x1: tx, y1: TOP_PAD - 4, x2: tx, y2: TICK_Y,
+                                   stroke: "#e0e0e0", "stroke-width": 1 });
+    svg.appendChild(line);
+    const tl = svgEl("text", { x: tx, y: TICK_Y + 14, "text-anchor": "middle",
+                                 "font-size": 11, fill: COL.axis });
+    tl.textContent = (t * 100).toFixed(0) + "%";
+    svg.appendChild(tl);
+  });
+  /* axis line */
+  const axLine = svgEl("line", { x1: AXIS_X_START, y1: TICK_Y, x2: AXIS_X_END, y2: TICK_Y,
+                                   stroke: COL.axis, "stroke-width": 1 });
+  svg.appendChild(axLine);
+
+  rows.forEach(function(row, i) {
+    const cy = TOP_PAD + i * ROW_H + ROW_H / 2;
+    const est = isFinite(row.pct_g0_to_g3) ? row.pct_g0_to_g3 : 0;
+    const ciLo = (row.pct_g0_to_g3_ci_lo !== null && isFinite(row.pct_g0_to_g3_ci_lo)) ? row.pct_g0_to_g3_ci_lo : null;
+    const ciHi = (row.pct_g0_to_g3_ci_hi !== null && isFinite(row.pct_g0_to_g3_ci_hi)) ? row.pct_g0_to_g3_ci_hi : null;
+    const cx = AXIS_X_START + est * AXIS_W;
+    const sq = Math.min(Math.max(Math.sqrt(row.n_trials / 35) * 10, 4), 14);
+    const color = colorFn(row);
+
+    /* CI whisker */
+    if (ciLo !== null && ciHi !== null) {
+      const x1 = AXIS_X_START + ciLo * AXIS_W;
+      const x2 = AXIS_X_START + ciHi * AXIS_W;
+      /* horizontal line */
+      const wl = svgEl("line", { x1, y1: cy, x2, y2: cy, stroke: COL.ci, "stroke-width": 1.5 });
+      svg.appendChild(wl);
+      /* caps */
+      [x1, x2].forEach(function(wx) {
+        const cap = svgEl("line", { x1: wx, y1: cy - 5, x2: wx, y2: cy + 5,
+                                     stroke: COL.ci, "stroke-width": 1.5 });
+        svg.appendChild(cap);
+      });
+    }
+
+    /* square */
+    const rect = svgEl("rect", {
+      x: cx - sq / 2, y: cy - sq / 2, width: sq, height: sq,
+      fill: color, rx: 1
+    });
+    svg.appendChild(rect);
+
+    /* row label */
+    const lbl = svgEl("text", { x: AXIS_X_START - 8, y: cy + 4, "text-anchor": "end",
+                                  "font-size": 12, fill: COL.text });
+    lbl.textContent = labelFn(row);
+    svg.appendChild(lbl);
+
+    /* value annotation */
+    const vt = svgEl("text", { x: AXIS_X_END + 8, y: cy + 4, "text-anchor": "start",
+                                 "font-size": 11, fill: "#555" });
+    vt.textContent = fmt1(row.pct_g0_to_g3) + " (n=" + row.n_trials + ")";
+    svg.appendChild(vt);
+  });
+}
+
+/* ─── BINARY FOREST ─── */
+buildForest(
+  "binary-forest-svg",
+  ATLAS.filter(function(r) { return r.sensitivity === "binary_1site"; }),
+  function(r) { return r.stratum_value === "True" ? "Africa-recruiting" : "Not Africa-recruiting"; },
+  function(r) { return r.stratum_value === "True" ? COL.africa : COL.nonAfrica; },
+  130
+);
+
+/* ─── THREE-TIER FOREST ─── */
+buildForest(
+  "threetier-forest-svg",
+  ATLAS.filter(function(r) { return r.sensitivity === "three_tier"; }),
+  function(r) { return r.stratum_value; },
+  function(r) {
+    if (r.stratum_value === "African-led") return COL.africa;
+    if (r.stratum_value === "African-recruiting") return "#66bb6a";
+    return COL.nonAfrica;
+  },
+  160
+);
+
+/* ─── SITE-SHARE FOREST ─── */
+buildForest(
+  "siteshare-forest-svg",
+  ATLAS.filter(function(r) { return r.sensitivity === "site_share_30pct"; }),
+  function(r) { return r.stratum_value === "True" ? "Site-share >=30%" : "Site-share <30%"; },
+  function(r) { return r.stratum_value === "True" ? COL.africa : COL.nonAfrica; },
+  130
+);
+
+/* ─── DRUG-CLASS BAR ─── */
+(function buildDrugBar() {
+  const svg = document.getElementById("drug-bar-svg");
+  if (!svg) return;
+  const rows = ATLAS.filter(function(r) { return r.sensitivity === "drug_class"; });
+  if (!rows.length) return;
+
+  const LEFT = 170, RIGHT = 160, BAR_H = 20, ROW_H = 30, TOP_PAD = 10;
+  const BAR_W = 500;
+  const H = TOP_PAD + rows.length * ROW_H + 30;
+  svg.setAttribute("viewBox", "0 0 " + (LEFT + BAR_W + RIGHT) + " " + H);
+  svg.setAttribute("height", H);
+
+  const maxTrials = Math.max.apply(null, rows.map(function(r) { return r.n_trials; }));
+
+  rows.forEach(function(row, i) {
+    const y = TOP_PAD + i * ROW_H;
+    const cy = y + BAR_H / 2 + 3;
+
+    /* background bar (all trials) */
+    const bgW = (row.n_trials / maxTrials) * BAR_W;
+    const bg = svgEl("rect", { x: LEFT, y, width: bgW, height: BAR_H, fill: COL.barBg, rx: 2 });
+    svg.appendChild(bg);
+
+    /* cochrane bar */
+    const cochW = (row.n_in_cochrane / maxTrials) * BAR_W;
+    if (cochW > 0) {
+      const cb = svgEl("rect", { x: LEFT, y, width: cochW, height: BAR_H, fill: COL.bar, rx: 2 });
+      svg.appendChild(cb);
+    }
+
+    /* row label */
+    const lbl = svgEl("text", { x: LEFT - 8, y: cy + 1, "text-anchor": "end",
+                                  "font-size": 12, fill: COL.text });
+    lbl.textContent = row.stratum_value;
+    svg.appendChild(lbl);
+
+    /* value annotation */
+    const vt = svgEl("text", { x: LEFT + bgW + 8, y: cy + 1, "text-anchor": "start",
+                                 "font-size": 11, fill: "#555" });
+    vt.textContent = fmt1(row.pct_g0_to_g3) + " (G3=" + row.n_in_cochrane + "/" + row.n_trials + ")";
+    svg.appendChild(vt);
+  });
+
+  /* axis line */
+  const axLine = svgEl("line", { x1: LEFT, y1: H - 20, x2: LEFT + BAR_W, y2: H - 20,
+                                   stroke: COL.axis, "stroke-width": 1 });
+  svg.appendChild(axLine);
+  /* ticks */
+  [0, 0.25, 0.5, 0.75, 1.0].forEach(function(t) {
+    const tx = LEFT + t * BAR_W;
+    const tl = svgEl("text", { x: tx, y: H - 6, "text-anchor": "middle",
+                                 "font-size": 10, fill: COL.axis });
+    tl.textContent = (t * maxTrials).toFixed(0) + "t";
+    svg.appendChild(tl);
+  });
+})();
+</script>
+
+</body>
+</html>
