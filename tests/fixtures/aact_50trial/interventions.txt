@@ -1,0 +1,107 @@
+nct_id|intervention_type|name
+NCT04340700|Drug|Bedaquiline
+NCT04340700|Drug|Pretomanid
+NCT04340700|Drug|Linezolid
+NCT02333799|Drug|Bedaquiline
+NCT02333799|Drug|Pretomanid
+NCT02333799|Drug|Linezolid
+NCT03086486|Drug|Bedaquiline
+NCT03086486|Drug|Pretomanid
+NCT03086486|Drug|Linezolid
+NCT03086486|Drug|Moxifloxacin
+NCT04062201|Drug|Bedaquiline
+NCT04062201|Drug|Pretomanid
+NCT04062201|Drug|Linezolid
+NCT05071716|Drug|Bedaquiline
+NCT05071716|Drug|Pretomanid
+NCT05071716|Drug|Linezolid
+NCT02573350|Drug|Bedaquiline
+NCT02573350|Drug|Clofazimine
+NCT02573350|Drug|Moxifloxacin
+NCT01918397|Drug|Bedaquiline
+NCT01918397|Drug|Moxifloxacin
+NCT04094493|Drug|Bedaquiline
+NCT04094493|Drug|Clofazimine
+NCT03828201|Drug|Bedaquiline
+NCT03828201|Drug|Levofloxacin
+NCT02409290|Drug|Bedaquiline
+NCT02409290|Drug|Pretomanid
+NCT02409290|Drug|Clofazimine
+NCT03237182|Drug|Bedaquiline
+NCT03237182|Drug|Clofazimine
+NCT04734652|Drug|Bedaquiline
+NCT04734652|Drug|Moxifloxacin
+NCT04575467|Drug|Bedaquiline
+NCT04575467|Drug|Clofazimine
+NCT04114669|Drug|Pretomanid
+NCT04114669|Drug|Linezolid
+NCT04256434|Drug|Pretomanid
+NCT04256434|Drug|Linezolid 1200mg
+NCT05176262|Drug|Pretomanid
+NCT05176262|Drug|Linezolid
+NCT04568967|Drug|Pretomanid
+NCT04568967|Drug|Linezolid
+NCT04568967|Drug|Rifampin
+NCT05214755|Drug|Pretomanid
+NCT05214755|Drug|Linezolid
+NCT01691534|Drug|Linezolid 1200mg
+NCT01691534|Drug|Linezolid 600mg
+NCT02573355|Drug|Linezolid 600mg
+NCT02573355|Drug|Linezolid 1200mg
+NCT03237203|Drug|Linezolid 600mg
+NCT03237203|Drug|Linezolid 300mg
+NCT03828244|Drug|Linezolid 600mg
+NCT03828244|Drug|Linezolid 1200mg
+NCT04094521|Drug|Linezolid 300mg
+NCT04094521|Drug|Linezolid 600mg
+NCT01215110|Drug|Bedaquiline
+NCT02333805|Drug|Bedaquiline 200mg
+NCT04114670|Drug|Bedaquiline
+NCT04114670|Other|Placebo
+NCT05071732|Drug|Bedaquiline
+NCT02333780|Drug|Pretomanid
+NCT03237145|Drug|Pretomanid 200mg
+NCT04256441|Drug|Pretomanid
+NCT04256441|Other|Placebo
+NCT05214762|Drug|Pretomanid
+NCT04734666|Drug|Bedaquiline
+NCT04734666|Drug|Pretomanid
+NCT04734666|Drug|Linezolid
+NCT04875611|Drug|Bedaquiline
+NCT04875611|Drug|Pretomanid
+NCT04875611|Drug|Linezolid
+NCT05176290|Drug|Bedaquiline
+NCT05176290|Drug|Pretomanid
+NCT05176290|Drug|Linezolid
+NCT05425912|Drug|Bedaquiline
+NCT05425912|Drug|Pretomanid
+NCT05425912|Drug|Linezolid
+NCT03085954|Drug|Rifapentine
+NCT03085954|Drug|Moxifloxacin
+NCT01691489|Biological|BCG Vaccine
+NCT02573344|Drug|Isoniazid
+NCT02573344|Drug|Rifampin
+NCT04062277|Drug|Moxifloxacin
+NCT04875655|Drug|Levofloxacin
+NCT00866554|Drug|Bedaquiline
+NCT01191515|Drug|Linezolid
+NCT01215127|Drug|Pretomanid
+NCT00866570|Drug|Bedaquiline
+NCT04340711|Drug|Bedaquiline
+NCT04340711|Drug|Pretomanid
+NCT04340711|Drug|Linezolid
+NCT05425933|Drug|Bedaquiline
+NCT05425933|Drug|Clofazimine
+NCT04094534|Drug|Linezolid
+NCT04568980|Drug|Bedaquiline
+NCT04568980|Drug|Pretomanid
+NCT04568980|Drug|Linezolid
+NCT04568980|Drug|Moxifloxacin
+NCT05000101|Drug|Bedaquiline
+NCT05000101|Drug|Pretomanid
+NCT05000101|Drug|Linezolid
+NCT05000101|Drug|Moxifloxacin
+NCT05176300|Drug|Bedaquiline
+NCT05176300|Drug|Pretomanid
+NCT05176300|Drug|Linezolid
+NCT05176300|Drug|Moxifloxacin

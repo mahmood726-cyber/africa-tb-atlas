@@ -1,0 +1,66 @@
+nct_id|country|city
+NCT04340700|South Africa|
+NCT04340700|United Kingdom|
+NCT02333799|Kenya|
+NCT03086486|Tanzania|
+NCT04062201|Uganda|
+NCT04062201|United Kingdom|
+NCT05071716|Mozambique|
+NCT02573350|Zambia|
+NCT01918397|South Africa|
+NCT01918397|United Kingdom|
+NCT04094493|Kenya|
+NCT03828201|Tanzania|
+NCT02409290|Uganda|
+NCT02409290|United Kingdom|
+NCT03237182|Mozambique|
+NCT04734652|Zambia|
+NCT04575467|South Africa|
+NCT04575467|United Kingdom|
+NCT04114669|Kenya|
+NCT04256434|Tanzania|
+NCT05176262|Uganda|
+NCT05176262|United Kingdom|
+NCT04568967|Mozambique|
+NCT05214755|Zambia|
+NCT01691534|South Africa|
+NCT01691534|United Kingdom|
+NCT02573355|Kenya|
+NCT03237203|Tanzania|
+NCT03828244|Uganda|
+NCT03828244|United Kingdom|
+NCT04094521|Mozambique|
+NCT01215110|Zambia|
+NCT02333805|South Africa|
+NCT02333805|United Kingdom|
+NCT04114670|United States|
+NCT05071732|United Kingdom|
+NCT02333780|Belarus|
+NCT03237145|Russia|
+NCT03237145|South Africa|
+NCT04256441|Germany|
+NCT05214762|Brazil|
+NCT04734666|United States|
+NCT04875611|United Kingdom|
+NCT04875611|South Africa|
+NCT05176290|Belarus|
+NCT05425912|Russia|
+NCT03085954|Germany|
+NCT01691489|Brazil|
+NCT01691489|South Africa|
+NCT02573344|United States|
+NCT04062277|United Kingdom|
+NCT04875655|Belarus|
+NCT00866554|Russia|
+NCT00866554|South Africa|
+NCT01191515|Germany|
+NCT01215127|Brazil|
+NCT00866570|United States|
+NCT04340711|United Kingdom|
+NCT04340711|South Africa|
+NCT05425933|Belarus|
+NCT04094534|Russia|
+NCT04568980|Germany|
+NCT05000101|Brazil|
+NCT05000101|South Africa|
+NCT05176300|United States|

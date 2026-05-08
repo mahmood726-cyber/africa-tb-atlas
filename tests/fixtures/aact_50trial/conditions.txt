@@ -1,0 +1,51 @@
+nct_id|name
+NCT04340700|Multidrug-Resistant Tuberculosis
+NCT02333799|MDR-TB
+NCT03086486|Multidrug-Resistant Tuberculosis
+NCT04062201|MDR-TB
+NCT05071716|Multidrug-Resistant Tuberculosis
+NCT02573350|MDR-TB
+NCT01918397|Multidrug-Resistant Tuberculosis
+NCT04094493|MDR-TB
+NCT03828201|Multidrug-Resistant Tuberculosis
+NCT02409290|MDR-TB
+NCT03237182|Multidrug-Resistant Tuberculosis
+NCT04734652|MDR-TB
+NCT04575467|Multidrug-Resistant Tuberculosis
+NCT04114669|MDR-TB
+NCT04256434|Multidrug-Resistant Tuberculosis
+NCT05176262|MDR-TB
+NCT04568967|Multidrug-Resistant Tuberculosis
+NCT05214755|MDR-TB
+NCT01691534|Multidrug-Resistant Tuberculosis
+NCT02573355|MDR-TB
+NCT03237203|Multidrug-Resistant Tuberculosis
+NCT03828244|MDR-TB
+NCT04094521|Multidrug-Resistant Tuberculosis
+NCT01215110|MDR-TB
+NCT02333805|Multidrug-Resistant Tuberculosis
+NCT04114670|MDR-TB
+NCT05071732|Multidrug-Resistant Tuberculosis
+NCT02333780|MDR-TB
+NCT03237145|Multidrug-Resistant Tuberculosis
+NCT04256441|MDR-TB
+NCT05214762|Multidrug-Resistant Tuberculosis
+NCT04734666|MDR-TB
+NCT04875611|Multidrug-Resistant Tuberculosis
+NCT05176290|MDR-TB
+NCT05425912|Multidrug-Resistant Tuberculosis
+NCT03085954|Drug-Sensitive Tuberculosis
+NCT01691489|Tuberculosis, Pulmonary
+NCT02573344|Drug-Sensitive Tuberculosis
+NCT04062277|Drug-Sensitive Tuberculosis
+NCT04875655|Drug-Sensitive Tuberculosis
+NCT00866554|Multidrug-Resistant Tuberculosis
+NCT01191515|MDR-TB
+NCT01215127|Multidrug-Resistant Tuberculosis
+NCT00866570|MDR-TB
+NCT04340711|Multidrug-Resistant Tuberculosis
+NCT05425933|Multidrug-Resistant Tuberculosis
+NCT04094534|Multidrug-Resistant Tuberculosis
+NCT04568980|MDR-TB
+NCT05000101|Multidrug-Resistant Tuberculosis
+NCT05176300|MDR-TB

@@ -1,0 +1,31 @@
+TrialID,Source_Register,Conditions,Secondary_IDs,Results_URL,Date_registration,Countries,Intervention,Primary_sponsor,Recruitment_Status,Public_title,Target_size
+NCT04340700,ClinicalTrials.gov,MDR-TB,,https://example.org/results/NCT04340700,2017-01-01,South Africa,Bedaquiline; Pretomanid; Linezolid,TB Alliance,Completed,BPaL Phase 3 ZeNix,181
+NCT02333799,ClinicalTrials.gov,MDR-TB,,,2014-04-01,United States,Bedaquiline; Pretomanid; Linezolid,TB Alliance,Completed,Nix-TB BPaL XDR,109
+NCT03086486,ClinicalTrials.gov,MDR-TB,,https://example.org/results/NCT03086486,2017-01-16,South Africa,Bedaquiline; Pretomanid; Linezolid; Moxifloxacin,TB Alliance,Completed,TB-PRACTECAL BPaLM,552
+NCT04062201,ClinicalTrials.gov,MDR-TB,,,2019-09-01,United States,Bedaquiline; Pretomanid; Linezolid,TB Alliance,Recruiting,BPaL Operational,800
+NCT05071716,ClinicalTrials.gov,MDR-TB,,https://example.org/results/NCT05071716,2021-10-01,South Africa,Bedaquiline; Pretomanid; Linezolid,TB Alliance,Recruiting,BPaL Implementation Study,220
+NCT02573350,ClinicalTrials.gov,MDR-TB,,,2016-04-01,United States,Bedaquiline; Clofazimine; Moxifloxacin,TB Alliance,Completed,STREAM Stage 2 Bdq Arm,588
+NCT01918397,ClinicalTrials.gov,MDR-TB,,https://example.org/results/NCT01918397,2014-08-01,South Africa,Bedaquiline; Moxifloxacin,TB Alliance,Completed,Bdq plus Moxifloxacin MDR,240
+NCT04094493,ClinicalTrials.gov,MDR-TB,,,2019-07-01,United States,Bedaquiline; Clofazimine,TB Alliance,Recruiting,Bdq plus Clofazimine MDR,130
+NCT03828201,ClinicalTrials.gov,MDR-TB,,https://example.org/results/NCT03828201,2018-12-01,South Africa,Bedaquiline; Levofloxacin,TB Alliance,Completed,Bdq plus Levofloxacin Cohort,95
+NCT02409290,ClinicalTrials.gov,MDR-TB,,,2017-04-01,United States,Bedaquiline; Pretomanid; Clofazimine,TB Alliance,Completed,endTB Bdq plus Pa companion,750
+NCT03237182,ClinicalTrials.gov,MDR-TB,,https://example.org/results/NCT03237182,2018-01-01,South Africa,Bedaquiline; Clofazimine,TB Alliance,Completed,Bdq Operational South Africa,320
+NCT04734652,ClinicalTrials.gov,MDR-TB,,,2020-05-01,United States,Bedaquiline; Moxifloxacin,TB Alliance,Completed,Bdq plus Mfx Belarus Cohort,110
+NCT04575467,ClinicalTrials.gov,MDR-TB,,https://example.org/results/NCT04575467,2020-09-01,South Africa,Bedaquiline; Clofazimine,TB Alliance,Recruiting,Bdq plus Cfz Companion Trial,85
+NCT04114669,ClinicalTrials.gov,MDR-TB,,,2018-11-01,United States,Pretomanid; Linezolid,TB Alliance,Completed,Pa plus Lzd Phase 2 dose,75
+NCT04256434,ClinicalTrials.gov,MDR-TB,,https://example.org/results/NCT04256434,2019-04-01,South Africa,Pretomanid; Linezolid 1200mg,TB Alliance,Completed,Pa plus Lzd 1200mg arm,60
+ISRCTN26973455,ISRCTN,MDR-TB,NCT04207112,https://www.isrctn.com/ISRCTN26973455,2017-01-16,South Africa;Belarus;Uzbekistan,Bedaquiline; Pretomanid; Linezolid; Moxifloxacin,Medecins Sans Frontieres,Completed,TB-PRACTECAL ISRCTN-version,552
+EUCTR2018-001234-56,EUCTR,MDR-TB,,,2018-08-12,Germany;France,Bedaquiline; Moxifloxacin,Charite Berlin,Completed,European Bdq plus Mfx Trial,40
+ChiCTR2000035001,ChiCTR,MDR-TB,,,2020-03-15,China,Linezolid,Beijing Chest Hospital,Completed,Chinese MDR-TB linezolid trial,100
+CTRI/2019/04/018700,CTRI,MDR-TB,,,2019-04-01,India,Bedaquiline; Linezolid; Clofazimine,AIIMS Delhi,Completed,Indian MDR-TB Cohort,200
+NCT03255954,ClinicalTrials.gov,MDR-TB,,,2017-08-15,South Africa,Bedaquiline; Pretomanid; Linezolid,TB Alliance,Completed,ICTRP-only BPaL South Africa,85
+NCT04199253,ClinicalTrials.gov,Pre-XDR Tuberculosis,,https://example.org/results/icaa,2019-12-15,Russia;Belarus,Bedaquiline; Linezolid; Clofazimine,USAID,Completed,Pre-XDR ICTRP Bdq Trial,150
+NCT05425971,ClinicalTrials.gov,MDR-TB,,,2022-09-20,Nigeria;Ghana,Bedaquiline; Pretomanid; Linezolid,EDCTP,Recruiting,West Africa BPaL Cohort,250
+NCT04568974,ClinicalTrials.gov,MDR-TB,,,2020-08-15,Ethiopia;Kenya,Linezolid 1200mg; Linezolid 600mg,AHRI,Completed,East Africa Lzd dose-finding,120
+NCT04875620,ClinicalTrials.gov,RR-TB,,,2021-03-15,South Africa,Pretomanid; Linezolid,Stellenbosch University,Recruiting,Pa plus Lzd RR-TB Cohort,90
+NCT05176295,ClinicalTrials.gov,MDR-TB,,,2021-12-10,South Africa,Bedaquiline; Pretomanid; Linezolid,IMPAACT,Recruiting,Pediatric BPaL Africa (excluded),60
+NCT01215159,ClinicalTrials.gov,MDR-TB,,,2010-12-15,South Africa,Linezolid,Stellenbosch University,Completed,Pre-2012 trial (excluded),50
+NCT04062345,ClinicalTrials.gov,Drug-Sensitive Tuberculosis,,,2019-09-15,Brazil;South Africa,Rifapentine; Moxifloxacin,CDC,Completed,DS-TB rifapentine (excluded no Bdq Pa Lzd),2500
+NCT04999001,ClinicalTrials.gov,MDR-TB,,,2021-06-01,Uganda;Tanzania,Bedaquiline; Linezolid,Makerere University,Recruiting,Uganda-Tanzania Bdq plus Lzd Cohort,75
+NCT05000888,ClinicalTrials.gov,Rifampicin-Resistant Tuberculosis,,https://example.org/results/rr-tb,2021-08-20,Nigeria,Bedaquiline; Pretomanid; Linezolid,EDCTP,Completed,Nigeria RR-TB Cohort BPaL,110
+NCT05100200,ClinicalTrials.gov,MDR-TB,,,2021-09-01,India,Pretomanid; Linezolid,ICMR,Recruiting,India Pa plus Lzd Cohort,95

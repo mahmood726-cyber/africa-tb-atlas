@@ -1,0 +1,51 @@
+nct_id|brief_title|start_date|enrollment|overall_status|study_type
+NCT04340700|BPaL Phase 3 ZeNix|2017-01-01|181|Completed|Interventional
+NCT02333799|Nix-TB BPaL XDR|2014-04-01|109|Completed|Interventional
+NCT03086486|TB-PRACTECAL BPaLM|2017-01-16|552|Completed|Interventional
+NCT04062201|BPaL Operational|2019-09-01|800|Recruiting|Interventional
+NCT05071716|BPaL Implementation Study|2021-10-01|220|Recruiting|Interventional
+NCT02573350|STREAM Stage 2 Bdq Arm|2016-04-01|588|Completed|Interventional
+NCT01918397|Bdq plus Moxifloxacin MDR|2014-08-01|240|Completed|Interventional
+NCT04094493|Bdq plus Clofazimine MDR|2019-07-01|130|Recruiting|Interventional
+NCT03828201|Bdq plus Levofloxacin Cohort|2018-12-01|95|Completed|Interventional
+NCT02409290|endTB Bdq plus Pa companion|2017-04-01|750|Completed|Interventional
+NCT03237182|Bdq Operational South Africa|2018-01-01|320|Completed|Interventional
+NCT04734652|Bdq plus Mfx Belarus Cohort|2020-05-01|110|Completed|Interventional
+NCT04575467|Bdq plus Cfz Companion Trial|2020-09-01|85|Recruiting|Interventional
+NCT04114669|Pa plus Lzd Phase 2 dose|2018-11-01|75|Completed|Interventional
+NCT04256434|Pa plus Lzd 1200mg arm|2019-04-01|60|Completed|Interventional
+NCT05176262|Pa plus Lzd Cohort South Africa|2021-12-01|110|Recruiting|Interventional
+NCT04568967|Pa plus Lzd plus rifampin|2020-08-01|80|Completed|Interventional
+NCT05214755|Pa plus Lzd Multi-arm|2022-01-15|140|Recruiting|Interventional
+NCT01691534|Linezolid Dose Optimisation|2013-06-01|90|Completed|Interventional
+NCT02573355|Linezolid 600 vs 1200|2015-04-01|175|Completed|Interventional
+NCT03237203|Lzd Dose-Finding Cohort|2018-01-15|200|Completed|Interventional
+NCT03828244|Linezolid Pharmacokinetics|2019-02-01|65|Completed|Interventional
+NCT04094521|Lzd 300mg vs 600mg|2019-08-01|110|Recruiting|Interventional
+NCT01215110|Bdq alone Phase 1|2013-02-01|45|Completed|Interventional
+NCT02333805|Bdq 200mg standalone|2015-08-15|55|Completed|Interventional
+NCT04114670|Bdq plus Placebo control|2019-03-01|80|Completed|Interventional
+NCT05071732|Bdq compassionate use|2021-11-01|60|Completed|Interventional
+NCT02333780|Pretomanid alone Phase 1|2014-09-01|30|Completed|Interventional
+NCT03237145|Pretomanid 200mg|2017-12-01|40|Completed|Interventional
+NCT04256441|Pretomanid plus Placebo|2019-10-01|65|Recruiting|Interventional
+NCT05214762|Pretomanid PK Study|2022-01-20|50|Recruiting|Interventional
+NCT04734666|BPaL Africa Cohort South Africa|2020-04-01|220|Completed|Interventional
+NCT04875611|BPaL Mozambique|2021-03-01|95|Completed|Interventional
+NCT05176290|BPaL Kenya Operational|2021-08-01|130|Recruiting|Interventional
+NCT05425912|BPaL Tanzania Phase 4|2022-09-15|180|Recruiting|Interventional
+NCT03085954|Rifapentine 4-month DS-TB|2017-05-01|2516|Completed|Interventional
+NCT01691489|BCG Vaccine Trial|2013-04-01|1200|Completed|Interventional
+NCT02573344|Isoniazid plus Rifampin Standard|2015-09-01|350|Completed|Interventional
+NCT04062277|Moxifloxacin alone DS-TB|2019-10-01|800|Completed|Interventional
+NCT04875655|Levofloxacin DS-TB|2021-04-01|600|Recruiting|Interventional
+NCT00866554|Bdq Pre-EUA Phase 2|2009-05-01|47|Completed|Interventional
+NCT01191515|Linezolid 2010 trial|2010-08-01|100|Completed|Interventional
+NCT01215127|Pretomanid Pre-2012|2010-12-01|35|Completed|Interventional
+NCT00866570|Bdq legacy phase 2|2009-09-01|30|Completed|Interventional
+NCT04340711|Pediatric BPaL Africa|2018-06-01|80|Recruiting|Interventional
+NCT05425933|Children with MDR-TB Bdq|2022-10-01|60|Recruiting|Interventional
+NCT04094534|Infant Lzd PK study|2019-09-01|35|Completed|Interventional
+NCT04568980|BPaLM Extended Regimen|2020-07-01|300|Recruiting|Interventional
+NCT05000101|BPaLM vs BPaL Comparison|2021-05-01|400|Recruiting|Interventional
+NCT05176300|BPaLM Short-Course Africa|2021-11-01|250|Recruiting|Interventional
