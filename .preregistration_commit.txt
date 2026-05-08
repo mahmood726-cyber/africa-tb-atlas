@@ -1,0 +1,84 @@
+africa-tb-atlas — preregistration anchor manifest
+=================================================
+
+This file records the integrity anchors of `prereg-v0.0.1`. It is the first
+commit added AFTER the prereg tag. The diff between `prereg-v0.0.1` and the
+commit that introduces this file IS the audit trail.
+
+Frozen tag
+----------
+tag         : prereg-v0.0.1
+commit SHA  : a9b6485d566c490b6f756915ad43d994af5d8a03
+date        : 2026-05-08
+remote      : https://github.com/mahmood726-cyber/africa-tb-atlas
+mechanism   : GitHub annotated tag + Internet Archive snapshot
+             (Bitcoin OTS path swapped on 2026-05-08; see
+              docs/AMENDMENTS.md and docs/spec.md §4.3)
+
+GitHub tag attestation
+----------------------
+  ref     : refs/tags/prereg-v0.0.1
+  obj_sha : fa7bcf0551896f2a924f1be42b0de7c3d0bbf4fb (annotated tag object)
+  target  : a9b6485d566c490b6f756915ad43d994af5d8a03 (locked spec commit)
+  push    : 2026-05-08 by mahmood726-cyber via gh CLI
+
+File: docs/spec.md
+  sha256 : 23a5c9b1b5799238a679ae924a8a3f4f0e2d7d9d61b56303678e6ca57578ac17
+
+File: docs/protocol.md
+  sha256 : 0fb9725784e028ba2b2c9e93786a41c937a09f94e40eadbfc1440cd1919152c4
+
+File: docs/AMENDMENTS.md
+  sha256 : 8b1fdfbb3748898629d42e7cdc87d7df6ece86aa21371d2648172fed5c7c81b9
+
+(All three sha256 are also recorded in `data/snapshots/prereg_manifest.json`,
+verifiable via `scripts/verify_prereg.py`.)
+
+Internet Archive snapshots (all HTTP 200, recorded 2026-05-08)
+--------------------------------------------------------------
+Repo root:
+  https://web.archive.org/web/20260508130013/https://github.com/mahmood726-cyber/africa-tb-atlas
+
+Tag tree:
+  https://web.archive.org/web/20260508130247/https://github.com/mahmood726-cyber/africa-tb-atlas/tree/prereg-v0.0.1
+
+spec.md:
+  https://web.archive.org/web/20260508130637/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/spec.md
+
+protocol.md:
+  https://web.archive.org/web/20260508130834/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/protocol.md
+
+AMENDMENTS.md:
+  https://web.archive.org/web/20260508131106/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/prereg-v0.0.1/docs/AMENDMENTS.md
+
+Provenance
+----------
+- git author    : mahmood789 (legacy alt account; both mahmood789 and
+                  mahmood726-cyber belong to the same person — see
+                  reference_github_accounts.md in user memory)
+- repo owner    : mahmood726-cyber (active account)
+- IA submission : anonymous; HTTP 200 from web.archive.org/save endpoint
+                  (1 succeeded first try; 4 took retry due to
+                  intermittent IA Cloudflare 520)
+
+Verifier
+--------
+  scripts/verify_prereg.py reads `data/snapshots/prereg_manifest.json` (pure
+  {relpath:sha256}) and re-computes sha256 of each file. OK if all match.
+
+  Currently: `python scripts/verify_prereg.py --manifest data/snapshots/prereg_manifest.json --root .`
+  -> "OK: 3 preregistered file(s) match"
+
+Anti-HARK commitment
+--------------------
+The 19 locked-at-spec decisions in spec.md §1.6, the 4-gate funnel
+definitions, the Africa-recruiting binary/30%/three-tier triple, the
+G3 union ensemble, and the 30-trial blinded G3 spot-check threshold
+(>=27/30) are LOCKED at this manifest. Any change after
+`prereg-v0.0.1` requires:
+
+  1. A new tag whose name documents the amendment, e.g.
+     `prereg-v0.1.0-amend-1`.
+  2. An entry in `docs/AMENDMENTS.md` describing what changed and why.
+  3. A new IA snapshot on the amended files.
+  4. Updating this manifest in the same commit as the new tag.
