@@ -13,6 +13,9 @@ data/processed/
 data/output/
 trials.parquet
 
+# Generated filled papers (contain real data; not submitted artifacts)
+e156-submission/*.filled.md
+
 # Dev
 .venv/
 .idea/
