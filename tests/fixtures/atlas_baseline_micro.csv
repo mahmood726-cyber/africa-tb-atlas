@@ -1,0 +1,16 @@
+sensitivity,stratum_key,stratum_value,n_trials,n_results_posted,n_peer_published,n_in_cochrane,n_invisible,n_participants,n_participants_results_posted,n_participants_peer_published,n_participants_in_cochrane,pct_g0_to_g3,pct_g0_to_g3_pat,pct_g0_to_g3_ci_lo,pct_g0_to_g3_ci_hi
+binary_1site,africa_recruiting,False,15,1,0,0,3,1950,150,0,0,0.0,0.0,0.0,0.0
+binary_1site,africa_recruiting,True,35,2,0,9,0,7202,662,0,2567,0.2571428571428571,0.3564287697861705,0.14285714285714285,0.35714285714285715
+site_share_30pct,site_share_30pct,False,15,1,0,0,3,1950,150,0,0,0.0,0.0,0.0,0.0
+site_share_30pct,site_share_30pct,True,35,2,0,9,0,7202,662,0,2567,0.2571428571428571,0.3564287697861705,0.14285714285714285,0.35714285714285715
+three_tier,africa_tier,African-led,34,1,0,8,0,6650,110,0,2015,0.23529411764705882,0.3030075187969925,0.0796031746031746,0.36243686868686864
+three_tier,africa_tier,African-recruiting,1,1,0,1,0,552,552,0,552,1.0,1.0,,
+three_tier,africa_tier,non-Africa,15,1,0,0,3,1950,150,0,0,0.0,0.0,0.0,0.0
+drug_class,drug_class,BPaL,11,1,0,3,0,2380,110,0,510,0.2727272727272727,0.21428571428571427,0.125,0.38461538461538464
+drug_class,drug_class,BPaLM,5,1,0,2,0,2054,552,0,1104,0.4,0.5374878286270691,0.0,0.8
+drug_class,drug_class,Bdq monotherapy/pair,3,0,0,0,0,160,0,0,0,0.0,0.0,0.0,0.0
+drug_class,drug_class,Bdq+other-companion,13,1,0,1,2,2863,150,0,588,0.07692307692307693,0.20537897310513448,0.0,0.23076923076923078
+drug_class,drug_class,Lzd dose-finding,6,0,0,2,0,760,0,0,290,0.3333333333333333,0.3815789473684211,0.0,0.6666666666666666
+drug_class,drug_class,Pa monotherapy/pair,4,0,0,0,0,185,0,0,0,0.0,0.0,0.0,0.0
+drug_class,drug_class,Pa+Lzd (no Bdq),7,0,0,1,0,650,0,0,75,0.14285714285714285,0.11538461538461539,0.0,0.42857142857142855
+drug_class,drug_class,other,1,0,0,0,1,100,0,0,0,0.0,0.0,,
