@@ -1,0 +1,31 @@
+{
+  "date": "2026-05-08",
+  "sentinel_mode": "block",
+  "sentinel_block_count": 0,
+  "sentinel_warn_count": 6,
+  "sentinel_warn_note": "all 6 WARNs are P1-unpopulated-placeholder on e156-submission/ template files; resolved at Task 27 real-data fill",
+  "tests_passing": 289,
+  "dry_run_preconditions": {
+    "PASS": [
+      "(a) preflight",
+      "(b) verify_prereg",
+      "(g) dashboard tests",
+      "(h) Sentinel BLOCK=0"
+    ],
+    "SKIP": [
+      "(c) atlas.csv sha256 vs baseline \u2014 Task 27",
+      "(d) validation_gates \u2014 Tasks 27 + 32b",
+      "(e) validate_e156_body \u2014 SPOTCHECK_* tokens from Task 32b",
+      "(f) validate_synthesis_note \u2014 N_TRIALS etc from Task 27"
+    ],
+    "FAIL": []
+  },
+  "deferred_tasks": {
+    "27": "real-data run (needs full ICTRP)",
+    "32b": "30-trial blinded auditor subagent (needs Task 27 atlas)",
+    "36": "atlas.csv git tag + IA snapshot (needs Task 27)",
+    "37": "v0.1.0 tag + workbook entry + memory + long-term-plan flip (needs Task 27)"
+  },
+  "next_session_pickup": "Tasks 27, 32b, 35, 36, 37. State checkpointed at HEAD.",
+  "head_commit": "7ae38a8691c605251737bad7b9e44f12d8710b5d"
+}
