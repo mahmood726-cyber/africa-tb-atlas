@@ -1,0 +1,10 @@
+{
+  "fetched_at": "2026-05-08",
+  "n_rows": 5878,
+  "notes": "PACTR-scoped subset (~5,878 trials) in WHO ICTRP CSV schema. Not the full ICTRP weekly export (~700K trials). MUST be replaced with full ICTRP before Task 27 real run; v0.1.0 atlas headlines computed against this snapshot would systematically miss EUCTR/ISRCTN-only trials registered outside Africa.",
+  "sha256": "44f99b1461fa87097c9a16f1b14863f7d2163af93a8c8e3da5e4f7ffdc419af4",
+  "snapshot_date": "2026-05-04",
+  "snapshot_path": "C:\\Users\\user\\data\\ictrp\\pactr_full_2026-05-04.csv",
+  "source": "ictrp",
+  "source_url": "https://www.who.int/clinical-trials-registry-platform"
+}

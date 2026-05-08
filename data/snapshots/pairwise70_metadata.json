@@ -1,0 +1,11 @@
+{
+  "fetched_at": "2026-05-08",
+  "n_rows": 3050,
+  "n_unique_reviews": 374,
+  "notes": "Pairwise70 study_references index: NCT-to-review_id lookup for 374 Cochrane reviews. Used for cross-atlas linkage (TB trials -> Cochrane MA). n_unique_reviews = distinct review_id values in the parquet.",
+  "sha256": "46722a94595fd6373e1cae363a952e39ae121ef0687e6863c8f3c5314552c1c5",
+  "snapshot_date": "2026-04-12",
+  "snapshot_path": "C:\\Users\\user\\data\\pairwise70\\study_references.parquet",
+  "source": "pairwise70",
+  "source_url": "https://github.com/mahmood726-cyber/repro-floor-atlas"
+}

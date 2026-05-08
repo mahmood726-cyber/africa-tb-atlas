@@ -1,0 +1,11 @@
+{
+  "fetched_at": "2026-05-08",
+  "n_reviews": 661,
+  "n_rows": 661,
+  "notes": "CDSR string index (review_strings table) used for full-text TB-keyword screening of Cochrane reviews. n_rows = n_reviews = distinct review_id values in the review_strings table.",
+  "sha256": "c7031e3ab3d6560ca96861675e6b3c3aedc314121bea1ab30a018c3626eabf3f",
+  "snapshot_date": "2026-04-12",
+  "snapshot_path": "C:\\Users\\user\\data\\cdsr\\cdsr_string_index.sqlite",
+  "source": "cdsr",
+  "source_url": "https://www.cochranelibrary.com/cdsr/reviews"
+}

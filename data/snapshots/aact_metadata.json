@@ -1,0 +1,10 @@
+{
+  "fetched_at": "2026-05-08",
+  "n_rows": 6946994,
+  "notes": "AACT pipe-delimited dump 2026-04-12. n_rows = sum of data rows across 5 tables (conditions, facilities, interventions, sponsors, studies). studies.txt alone: 579828 rows (= NCT trial count). sha256 = hash of sequential concatenation of the 5 files in alphabetical order.",
+  "sha256": "a21d5a806b1a82b2843458bb2c46b89d8a429d54ecd7e9c10e710b8ff786c421",
+  "snapshot_date": "2026-04-12",
+  "snapshot_path": "C:\\Users\\user\\AACT\\2026-04-12",
+  "source": "aact",
+  "source_url": "https://aact.ctti-clinicaltrials.org/pipe_files"
+}
