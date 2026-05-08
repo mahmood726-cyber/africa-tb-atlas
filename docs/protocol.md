@@ -1,14 +1,18 @@
 # africa-tb-atlas — Protocol
 
-**OTS-stamped:** [pending Task 6]
-**Spec sha256:** [auto-filled by verify_prereg.py]
+**Pre-registered via:** signed GitHub tag `prereg-v0.0.1` + Internet Archive Wayback snapshot
+**GitHub repo:** `github.com/mahmood726-cyber/africa-tb-atlas`
+**Spec sha256:** [recorded in `data/snapshots/prereg_manifest.json`; verified by `scripts/verify_prereg.py`]
+**IA snapshot URLs:** [recorded in `data/snapshots/internet_archive_prereg.json`]
 
 ## Pre-extraction protocol
 
-1. spec.md and protocol.md OTS-stamped on 3 calendars (a-pool, b-pool, finney/eternitywall) BEFORE any extraction.
-2. Snapshots sha256-pinned in `data/snapshots/*_metadata.json`.
-3. `pilots/preflight.py` runs first, fails closed on missing prerequisites.
-4. Full pipeline runs end-to-end via `pilots/run_all.py`.
+1. spec.md and protocol.md committed + GitHub repo created (public).
+2. Tag `prereg-v0.0.1` created at the commit that holds the locked spec; tag pushed to GitHub.
+3. Internet Archive snapshot of raw spec.md and protocol.md GitHub blob URLs requested via `web.archive.org/save/<URL>`; resulting Wayback URLs recorded in `data/snapshots/internet_archive_prereg.json`.
+4. Snapshots sha256-pinned in `data/snapshots/*_metadata.json` (this happens at Task 6, after prereg, since snapshot integrity is about the input data not the protocol).
+5. `pilots/preflight.py` runs first, fails closed on missing prerequisites.
+6. Full pipeline runs end-to-end via `pilots/run_all.py`.
 
 ## Pre-ship validation gates (fail-closed)
 
@@ -16,7 +20,7 @@
 2. TrialScout sanity: G0→G2 ≥53.6% (one-sided; high values OK).
 3. 30-trial blinded G3 spot-check: ≥27/30 verdict-level agreement (else re-frame as methodology-calibration paper, PACTR-Hiddenness Amendment 2 precedent).
 4. Sentinel pre-push BLOCK=0.
-5. atlas.csv sha256 stamped on 3 OTS calendars.
+5. atlas.csv tagged at `v0.1.0` (immutable in git history) and IA-snapshotted; sha256 recorded in `data/snapshots/output_baselines.json`.
 
 ## Spot-check sampling
 
@@ -29,6 +33,7 @@
 ## Amendments
 
 Any change to the 19 locked-at-spec decisions in spec.md §1.6 requires:
-1. New OTS-stamped commit
+1. New commit (the prior tag remains immutable in git history)
 2. Entry in AMENDMENTS.md with date, decision-id, change, justification
-3. Re-run of any affected validation gate
+3. Optional new tag (e.g. `prereg-v0.1.0-amend-1`) + IA snapshot of the amended spec
+4. Re-run of any affected validation gate

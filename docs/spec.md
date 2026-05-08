@@ -9,7 +9,7 @@
 
 ## 0. Summary (one paragraph)
 
-The African TB Trial Atlas audits the Cochrane-inclusion pipeline for **modern MDR/XDR-TB regimen trials** — defined as trials of any regimen containing **bedaquiline, pretomanid, or linezolid** with start_date ≥ **2012-12-28** (bedaquiline FDA-EUA). The atlas builds a global denominator of ~150–300 such trials from AACT (CT.gov) ∪ ICTRP (WHO weekly export, deduped on NCT/ISRCTN/EUCTR), classifies each trial by African-site presence (binary headline + site-share + three-tier sensitivity), runs each trial through a 4-gate funnel (registered → results-posted → peer-published → in-Cochrane), and reports both **trial-weighted** and **patient-weighted** Cochrane-inclusion rates stratified by Africa-recruiting vs not. The atlas is pre-registered via Bitcoin OTS and validated via a 30-trial blinded spot-check on the headline G3 gate. Target deliverable: Synthēsis E156 micro-paper + Methods Note at v0.1.0, on or before the Q3-2026 OKR deadline.
+The African TB Trial Atlas audits the Cochrane-inclusion pipeline for **modern MDR/XDR-TB regimen trials** — defined as trials of any regimen containing **bedaquiline, pretomanid, or linezolid** with start_date ≥ **2012-12-28** (bedaquiline FDA-EUA). The atlas builds a global denominator of ~150–300 such trials from AACT (CT.gov) ∪ ICTRP (WHO weekly export, deduped on NCT/ISRCTN/EUCTR), classifies each trial by African-site presence (binary headline + site-share + three-tier sensitivity), runs each trial through a 4-gate funnel (registered → results-posted → peer-published → in-Cochrane), and reports both **trial-weighted** and **patient-weighted** Cochrane-inclusion rates stratified by Africa-recruiting vs not. The atlas is pre-registered via a signed GitHub tag (`prereg-v0.0.1`) plus Internet Archive snapshot of the spec and protocol, and validated via a 30-trial blinded spot-check on the headline G3 gate. Target deliverable: Synthēsis E156 micro-paper + Methods Note at v0.1.0, on or before the Q3-2026 OKR deadline.
 
 ---
 
@@ -50,7 +50,7 @@ For each of the 2 strata, report:
 
 ### 1.6 Locked-at-spec decisions (HARK protection)
 
-These freeze on the OTS-stamped spec and DO NOT change after data extraction. Any change requires a new OTS-stamped AMENDMENT.
+These freeze on the git-tagged spec (tag `prereg-v0.0.1` pushed to GitHub + IA-snapshot before any extraction) and DO NOT change after data extraction. Any change requires a new commit + AMENDMENTS.md entry; the prior tag remains in the repo as immutable history and the prior IA snapshot remains accessible at the recorded Wayback URL.
 
 1. Intervention list: bedaquiline, pretomanid, linezolid (positive list); plus brand names (Sirturo, Dovprela, Zyvox, Linox, Linospan, etc); plus pretomanid code names (PA-824 only — TBA-354 is a separate confusable, on negative list)
 2. Time window: trial `start_date ≥ 2012-12-28` (bedaquiline FDA-EUA)
@@ -96,8 +96,8 @@ africa-tb-atlas/
 ├── atlas.csv                   (committed at v0.1.0, sha256-pinned)
 ├── atlas_baseline.csv          (committed)
 ├── docs/
-│   ├── spec.md                 (OTS-stamped before any extraction)
-│   ├── protocol.md             (OTS-stamped sister doc)
+│   ├── spec.md                 (git-tag prereg-v0.0.1 + IA snapshot BEFORE extraction)
+│   ├── protocol.md             (git-tag prereg-v0.0.1 + IA snapshot sister doc)
 │   ├── extraction_audit.md     (methodological caveats)
 │   └── AMENDMENTS.md
 ├── data/
@@ -217,7 +217,7 @@ End-to-end pipeline (vertical = time order; arrows = file/parquet boundaries):
             2. TrialScout sanity (G2 ≥ 53.6%, one-sided)
             3. 30-trial blinded spot-check on G3 ≥ 27/30
             4. Sentinel pre-push: BLOCK=0
-            5. OTS stamps verify (3 calendars on spec, protocol, atlas.csv)
+            5. Prereg verify (git tag prereg-v0.0.1 + IA snapshots on spec, protocol; atlas.csv tagged at v0.1.0)
                          │
                          ▼
                    v0.1.0 release
@@ -268,15 +268,20 @@ Every gate carries `n_trials` and `n_participants` summed simultaneously. Headli
 - `tests/fixtures/pairwise70_micro.parquet` — 5 NCTs, 3 ISRCTNs, 4 fake review IDs
 - `tests/fixtures/cdsr_string_micro.sqlite` — 3 reviews with study-list strings
 
-### 4.3 Pre-registration / HARK protection
+### 4.3 Pre-registration / HARK protection (GitHub tag + Internet Archive)
 
-The spec doc (`docs/spec.md`) and protocol doc (`docs/protocol.md`) get OTS-stamped on **3 independent calendars** (a-pool, b-pool, finney/eternitywall) **before any data extraction runs**.
+The spec doc (`docs/spec.md`) and protocol doc (`docs/protocol.md`) are pre-registered via two independent timestamping mechanisms **before any data extraction runs**:
 
-After OTS:
+1. **Signed GitHub tag** `prereg-v0.0.1` pushed to `github.com/mahmood726-cyber/africa-tb-atlas` — anyone can clone the repo and verify the commit SHA + tag-creation timestamp recorded by GitHub.
+2. **Internet Archive (Wayback) snapshot** of the raw spec.md and protocol.md GitHub URLs — independent of GitHub; provides a second-witness timestamp at `web.archive.org/web/<timestamp>/...`.
+
+Bitcoin OpenTimestamps was the original plan; switched to GitHub+IA on 2026-05-08 (recorded in AMENDMENTS.md). The combination provides defense-in-depth: even if GitHub is compromised, IA carries an independent record; even if IA disappears, the GitHub tag remains.
+
+After prereg:
 1. The 19 locked-at-spec decisions cannot change without a public AMENDMENT.
-2. Every amendment is OTS-stamped + logged in `AMENDMENTS.md`.
-3. `verify_prereg.py` is a CI/preflight script that fails closed if spec sha256 has drifted from the OTS-stamped value.
-4. atlas.csv is OTS-stamped at v0.1.0 release (NOT before).
+2. Every amendment is committed + logged in `AMENDMENTS.md`; the prior tag remains immutable in git history.
+3. `verify_prereg.py` is a CI/preflight script that fails closed if local spec sha256 has drifted from the value recorded in `data/snapshots/prereg_manifest.json`.
+4. atlas.csv is git-tagged + IA-snapshotted at v0.1.0 release (NOT before).
 
 ### 4.4 30-trial blinded spot-check (G3-only)
 
@@ -322,7 +327,7 @@ The methodological centerpiece. Protocol:
 
 - atlas.csv committed alongside the snapshot it was built from (sha256-pinned)
 - Bad release = `git revert` v0.1.0 tag + ship v0.1.1 with documented amendment
-- No deletions of OTS-stamped artifacts; only additions
+- No deletions of tagged artifacts; the prereg tag is immutable; only additions/amendments allowed
 
 ---
 
@@ -335,7 +340,7 @@ The methodological centerpiece. Protocol:
 | Master per-trial output | `trials.parquet` | Off-repo if >2 MB after compression |
 | Aggregated atlas | `atlas.csv` | Committed; sha256-pinned in `data/snapshots/output_baselines.json` |
 | Regression baseline | `atlas_baseline.csv` | Identical to v0.1.0 atlas.csv at release |
-| Pre-registered protocol | `docs/spec.md` + `docs/protocol.md` | OTS-stamped on 3 calendars BEFORE extraction |
+| Pre-registered protocol | `docs/spec.md` + `docs/protocol.md` | git-tag `prereg-v0.0.1` + IA snapshot BEFORE extraction |
 | Methodological caveats | `docs/extraction_audit.md` | Drug confusables, dedup decisions, country-code coverage |
 | Spot-check artifacts | `data/processed/spotcheck_v0.1.0_{blinded,auditor,merged}.csv` | Pre-ship gate evidence |
 | Snapshot integrity | `data/snapshots/{aact,ictrp,pairwise70,cdsr}_metadata.json` | sha256, fetched_at, source_url |
@@ -346,7 +351,7 @@ The methodological centerpiece. Protocol:
 | Sentinel hook | `.git/hooks/pre-push` (installed) | mode=block at v0.1.0 |
 | GitHub Pages | `mahmood726-cyber.github.io/africa-tb-atlas/` | HTTP 200 verified |
 | Internet Archive | Wayback snapshots of root, spec, protocol, dashboard | All HTTP 200 |
-| OTS stamps at release | spec.md, protocol.md, atlas.csv | 3 calendars each |
+| Release stamps | spec.md, protocol.md (prereg-v0.0.1 tag); atlas.csv (v0.1.0 tag) | All IA-snapshotted; recorded in `data/snapshots/` JSON manifests |
 
 ### 5.2 Test target
 
@@ -371,7 +376,7 @@ This atlas is one of the 3 disease-specific Africa atlases under `q3-2026-canon-
 
 | Phase | Sessions | Hours |
 |---|---|---|
-| Spec + OTS + plan | 1 | 8 |
+| Spec + prereg + plan | 1 | 8 |
 | Phase A+B (denominator) | 2 | 16 |
 | Phase C+D (classify + gates) | 1 | 8 |
 | Phase E+F (atlas/dashboard/paper, validation) | 2 | 16 |
@@ -392,7 +397,7 @@ This atlas is one of the 3 disease-specific Africa atlases under `q3-2026-canon-
 3. Spot-check ≥27/30 on G3 (or documented disagreement profile per Amendment, PACTR-Hiddenness precedent)
 4. atlas.csv sha256 matches `atlas_baseline.csv` (regression test green)
 5. dashboard live on Pages (HTTP 200)
-6. spec.md + protocol.md + atlas.csv all OTS-stamped on 3 calendars
+6. spec.md + protocol.md tagged `prereg-v0.0.1`; atlas.csv tagged `v0.1.0`; all IA-snapshotted with URLs recorded in `data/snapshots/`
 7. body.md passes 156w validator + DOI-resolved references
 8. Workbook entry appended to `C:\E156\rewrite-workbook.txt`
 9. tag `v0.1.0` annotated and pushed
@@ -401,7 +406,7 @@ This atlas is one of the 3 disease-specific Africa atlases under `q3-2026-canon-
 ### 5.9 Failure / revert contract
 
 - If 1–10 fail at release: `git reset --soft` to before tag, fix, retag.
-- Critical bug post-release: `git revert` + ship v0.1.1 with `AMENDMENTS.md` entry. Never delete OTS-stamped artifacts.
+- Critical bug post-release: `git revert` + ship v0.1.1 with `AMENDMENTS.md` entry. Never delete or force-push over tagged artifacts (the `prereg-v0.0.1` and `v0.1.0` tags are immutable).
 - Spot-check <25/30: ship as methodology-calibration paper (PACTR-Hiddenness Amendment 2 precedent) — disagreement profile becomes the substantive finding.
 
 ---
@@ -412,7 +417,7 @@ This atlas is one of the 3 disease-specific Africa atlases under `q3-2026-canon-
 
 ### 6.2 Auto-locked at spec time (canonical from sister atlases; not user-decided)
 
-- Pre-registration via Bitcoin OTS on 3 calendars
+- Pre-registration via signed GitHub tag (`prereg-v0.0.1`) + Internet Archive snapshot (changed from Bitcoin OTS on 2026-05-08; see AMENDMENTS.md)
 - Spot-check via blinded subagent (no algorithm verdicts)
 - Sentinel pre-push hook with mode=block at release
 - `paths.toml` for external snapshots; no hardcoded `C:\` in src/tests
