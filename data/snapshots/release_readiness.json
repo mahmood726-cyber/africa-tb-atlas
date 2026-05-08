@@ -27,5 +27,14 @@
     "37": "v0.1.0 tag + workbook entry + memory + long-term-plan flip (needs Task 27)"
   },
   "next_session_pickup": "Tasks 27, 32b, 35, 36, 37. State checkpointed at HEAD.",
-  "head_commit": "7ae38a8691c605251737bad7b9e44f12d8710b5d"
+  "head_commit": "7ae38a8691c605251737bad7b9e44f12d8710b5d",
+  "github_pages": {
+    "enabled": true,
+    "enabled_at": "2026-05-08",
+    "html_url": "https://mahmood726-cyber.github.io/africa-tb-atlas/",
+    "status": "built",
+    "verified_http_200": true,
+    "rendered_atlas_source": "fixture-mode (Task 27 will refresh)",
+    "wayback_snapshots": "data/snapshots/internet_archive_pages.json"
+  }
 }

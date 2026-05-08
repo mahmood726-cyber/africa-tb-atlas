@@ -1,0 +1,25 @@
+{
+  "_meta": {
+    "purpose": "Internet Archive (Wayback) snapshots of the live GitHub Pages dashboard, recorded immediately after Pages was enabled (Task 35). Documents the visual state of the dashboard at v0.1.0-development. Will be re-snapshotted at Task 36 after Task 27 produces the real-data atlas.csv.",
+    "pages_enabled_at": "2026-05-08",
+    "pages_status": "built",
+    "pages_html_url": "https://mahmood726-cyber.github.io/africa-tb-atlas/",
+    "pages_branch": "master",
+    "pages_path": "/",
+    "https_enforced": true,
+    "rendered_atlas_source": "tests/fixtures/atlas_baseline_micro.csv (fixture-mode; Task 27 will refresh with real atlas.csv)"
+  },
+  "snapshots": {
+    "pages_root": {
+      "source_url": "https://mahmood726-cyber.github.io/africa-tb-atlas/",
+      "wayback_url": "https://web.archive.org/web/20260508204428/https://mahmood726-cyber.github.io/africa-tb-atlas/dashboard/",
+      "wayback_timestamp": "20260508204428",
+      "note": "root URL redirects to /dashboard/ via meta refresh; Wayback resolves the redirect"
+    },
+    "pages_dashboard": {
+      "source_url": "https://mahmood726-cyber.github.io/africa-tb-atlas/dashboard/",
+      "wayback_url": "https://web.archive.org/web/20260508204428/https://mahmood726-cyber.github.io/africa-tb-atlas/dashboard/",
+      "wayback_timestamp": "20260508204428"
+    }
+  }
+}
