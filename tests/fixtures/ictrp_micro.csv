@@ -1,0 +1,9 @@
+TrialID,Source_Register,Conditions,Secondary_IDs,Results_URL,Date_registration,Countries,Intervention,Primary_sponsor,Recruitment_Status,Public_title,Target_size
+NCT02000001,ClinicalTrials.gov,XDR-TB,,,2018-04-01,South Africa;Russia,Bedaquiline; Pretomanid; Linezolid,TB Alliance,Completed,BPaL Phase 3,180
+ISRCTN26973455,ISRCTN,MDR-TB,NCT04207112,,2017-01-16,South Africa;Belarus;Uzbekistan,Bedaquiline; Pretomanid; Linezolid; Moxifloxacin,Médecins Sans Frontières,Completed,TB-PRACTECAL,552
+EUCTR2018-001234-56,EUCTR,MDR-TB,,,2018-08-12,Germany;France,Bedaquiline; Moxifloxacin,Charité Berlin,Completed,European Bdq+Mfx,40
+NCT02000002,ClinicalTrials.gov,MDR-TB,ISRCTN12345678,,2019-05-01,Kenya;UK,Linezolid,KEMRI,Recruiting,Dual-registered Trial,220
+ICTRP-CN-001,ChiCTR,MDR-TB,,,2020-03-15,China,Linezolid,Beijing Chest Hospital,Completed,Chinese MDR-TB linezolid trial,100
+NCT02000003,ClinicalTrials.gov,Pediatric MDR-TB,,,2021-02-01,South Africa,Bedaquiline; Pretomanid; Linezolid,IMPAACT,Recruiting,Pediatric BPaL (excluded later),60
+NCT02000004,ClinicalTrials.gov,MDR-TB,,,2010-06-01,South Africa,Linezolid,Stellenbosch University,Completed,Pre-2012 trial (excluded later),50
+NCT02000005,ClinicalTrials.gov,Drug-Sensitive Tuberculosis,,,2017-08-01,Brazil;South Africa,Rifapentine; Moxifloxacin,CDC,Completed,DS-TB rifapentine (excluded — no Bdq/Pa/Lzd),2500
