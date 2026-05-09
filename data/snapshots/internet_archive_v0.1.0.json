@@ -1,0 +1,31 @@
+{
+  "_meta": {
+    "purpose": "Internet Archive (Wayback) snapshots taken at v0.1.0 ship.",
+    "tag": "v0.1.0",
+    "tag_target_commit": "d5ce123",
+    "github_repo": "https://github.com/mahmood726-cyber/africa-tb-atlas",
+    "created_at": "2026-05-09"
+  },
+  "snapshots": {
+    "v010_tag_tree": {
+      "source_url": "https://github.com/mahmood726-cyber/africa-tb-atlas/tree/v0.1.0",
+      "wayback_url": "https://web.archive.org/web/20260509090907/https://github.com/mahmood726-cyber/africa-tb-atlas/tree/v0.1.0",
+      "wayback_timestamp": "20260509090907"
+    },
+    "atlas_csv": {
+      "source_url": "https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/v0.1.0/atlas.csv",
+      "wayback_url": "https://web.archive.org/web/20260509090931/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/v0.1.0/atlas.csv",
+      "wayback_timestamp": "20260509090931"
+    },
+    "body_md": {
+      "source_url": "https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/v0.1.0/e156-submission/body.md",
+      "wayback_url": "https://web.archive.org/web/20260509091048/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/v0.1.0/e156-submission/body.md",
+      "wayback_timestamp": "20260509091048"
+    },
+    "extraction_audit_md": {
+      "source_url": "https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/v0.1.0/docs/extraction_audit.md",
+      "wayback_url": "https://web.archive.org/web/20260509091045/https://raw.githubusercontent.com/mahmood726-cyber/africa-tb-atlas/v0.1.0/docs/extraction_audit.md",
+      "wayback_timestamp": "20260509091045"
+    }
+  }
+}
