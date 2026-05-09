@@ -86,6 +86,11 @@ def main() -> int:
     ap.add_argument("--no-network", action="store_true",
                     help="Skip Europe PMC HTTP calls (tests).")
     ap.add_argument("--n-bootstrap", type=int, default=1000)
+    ap.add_argument("--skip-ictrp", action="store_true",
+                    help="Skip ICTRP load entirely (AACT-only). Use when the "
+                         "ICTRP snapshot lacks required columns (e.g., the "
+                         "PACTR-scoped subset which omits Public title, "
+                         "Intervention, Target_size).")
     args = ap.parse_args()
 
     if not args.paths_toml.exists():
@@ -100,9 +105,18 @@ def main() -> int:
     aact = load_aact(paths.aact_snapshot_dir)
     print(f"[A] AACT loaded: {len(aact)} trials")
 
-    print("[A] loading ICTRP…", flush=True)
-    ictrp = load_ictrp(paths.ictrp_snapshot)
-    print(f"[A] ICTRP loaded: {len(ictrp)} trials")
+    if args.skip_ictrp:
+        print("[A] ICTRP load: SKIPPED (--skip-ictrp); AACT-only pipeline.", flush=True)
+        ictrp = pd.DataFrame(columns=aact.columns)
+    else:
+        print("[A] loading ICTRP…", flush=True)
+        try:
+            ictrp = load_ictrp(paths.ictrp_snapshot)
+            print(f"[A] ICTRP loaded: {len(ictrp)} trials")
+        except Exception as e:
+            print(f"[A] ICTRP load FAILED: {e}", file=sys.stderr)
+            print(f"[A] ICTRP load: degraded to AACT-only mode.", file=sys.stderr)
+            ictrp = pd.DataFrame(columns=aact.columns)
 
     # ---- Phase B: filter + dedup
     print("[B] building denominator…", flush=True)

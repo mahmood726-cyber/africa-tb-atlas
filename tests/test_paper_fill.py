@@ -20,7 +20,7 @@ def _fill_body() -> None:
             "--atlas",
             "tests/fixtures/atlas_baseline_micro.csv",
             "--out",
-            "e156-submission/body.md",
+            "e156-submission/body.fixture.md",
         ],
         cwd=REPO,
     )
@@ -28,7 +28,7 @@ def _fill_body() -> None:
 
 def test_fill_produces_body_md_with_no_unexpected_placeholders():
     """All known placeholders except the allowed pair are resolved."""
-    out_path = REPO / "e156-submission/body.md"
+    out_path = REPO / "e156-submission/body.fixture.md"
     r = subprocess.run(
         [
             sys.executable,
@@ -65,7 +65,7 @@ def test_body_template_has_seven_sentences():
 
 def test_body_filled_word_count_under_156():
     """Post-fill body must be ≤156 words (E156 hard ceiling)."""
-    body_path = REPO / "e156-submission/body.md"
+    body_path = REPO / "e156-submission/body.fixture.md"
     if not body_path.exists():
         _fill_body()
     text = body_path.read_text(encoding="utf-8")
@@ -90,7 +90,7 @@ def test_methods_note_template_under_400_words():
 
 def test_validate_e156_body_runs_without_crash():
     """validate_e156_body.py must execute without ImportError or SyntaxError."""
-    body_path = REPO / "e156-submission/body.md"
+    body_path = REPO / "e156-submission/body.fixture.md"
     if not body_path.exists():
         _fill_body()
     r = subprocess.run(

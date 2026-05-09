@@ -10,7 +10,7 @@ import pandas as pd
 
 REQUIRED_TABLES = ["studies", "interventions", "facilities", "conditions", "sponsors"]
 
-EXPECTED_SCHEMAS = {
+REQUIRED_SCHEMAS = {
     "studies": {"nct_id", "brief_title", "start_date", "enrollment",
                 "overall_status", "study_type"},
     "interventions": {"nct_id", "intervention_type", "name"},
@@ -19,9 +19,26 @@ EXPECTED_SCHEMAS = {
     "sponsors": {"nct_id", "lead_or_collaborator", "name"},
 }
 
+# Backward-compat alias (older code/tests may import EXPECTED_SCHEMAS).
+EXPECTED_SCHEMAS = REQUIRED_SCHEMAS
+
+# Optional columns we keep when present (real AACT carries many more cols
+# than our fixture; we project to a stable subset). NEW cols added: any
+# column appearing in REQUIRED_SCHEMAS[table] OR OPTIONAL_KEEP[table] is
+# preserved through `_load_table`. Other AACT cols are silently dropped
+# (subset semantics; real AACT has 60+ studies cols we don't use).
+OPTIONAL_KEEP = {
+    "studies": {"results_first_posted_date", "phase", "completion_date",
+                "last_known_status", "official_title"},
+    "interventions": set(),
+    "facilities": set(),
+    "conditions": set(),
+    "sponsors": set(),
+}
+
 
 class AACTSchemaError(Exception):
-    """Raised when an AACT table has unexpected columns (schema drift)."""
+    """Raised when an AACT table is missing required columns (schema drift)."""
 
 
 def _load_table(snapshot_dir: Path, table: str) -> pd.DataFrame:
@@ -29,18 +46,20 @@ def _load_table(snapshot_dir: Path, table: str) -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError(f"AACT table missing: {path}")
     df = pd.read_csv(path, sep="|", dtype=str, keep_default_na=False, na_values=[""])
-    expected = EXPECTED_SCHEMAS[table]
+    required = REQUIRED_SCHEMAS[table]
     actual = set(df.columns)
-    if not expected.issubset(actual):
-        missing = expected - actual
-        raise AACTSchemaError(f"{table}.txt missing columns: {missing}")
-    extra = actual - expected
-    if extra:
+    missing = required - actual
+    if missing:
         raise AACTSchemaError(
-            f"{table}.txt has unexpected columns: {extra}. "
-            f"AACT schema may have drifted; update EXPECTED_SCHEMAS after audit."
+            f"{table}.txt missing required columns: {missing}. "
+            f"AACT schema may have drifted; update REQUIRED_SCHEMAS after audit."
         )
-    return df
+    # Subset semantics: keep required + optional, drop the rest. Real AACT
+    # carries 60+ studies columns we don't use; preserving the full table
+    # bloats memory by ~5x without benefit.
+    keep = required | OPTIONAL_KEEP.get(table, set())
+    keep = keep & actual  # only columns that actually exist
+    return df[sorted(keep)]
 
 
 def load_aact(snapshot_dir) -> pd.DataFrame:
@@ -81,19 +100,21 @@ def load_aact(snapshot_dir) -> pd.DataFrame:
     # Collapse one-to-many joins to lists.
     # Sort all list-valued aggregations for byte-stable output (spec §3.2).
     # AACT row order can drift between releases; downstream filters are order-insensitive.
+    # Drop NaN / coerce to str before sorting (real AACT has null name rows
+    # that would crash sorted() with TypeError on float vs str comparison).
     interventions_grp = (
         interventions.groupby("nct_id")["name"]
-        .apply(lambda s: sorted(s))
+        .apply(lambda s: sorted(s.dropna().astype(str)))
         .rename("interventions")
     )
     countries_grp = (
         facilities.groupby("nct_id")["country"]
-        .apply(lambda s: sorted(set(s)))
+        .apply(lambda s: sorted(set(s.dropna().astype(str))))
         .rename("countries")
     )
     conditions_grp = (
         conditions.groupby("nct_id")["name"]
-        .apply(lambda s: sorted(set(s)))
+        .apply(lambda s: sorted(set(s.dropna().astype(str))))
         .rename("conditions")
     )
 

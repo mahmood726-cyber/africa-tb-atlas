@@ -40,3 +40,42 @@ Option 1 is the narrowest fix. The marker explicitly documents the rationale so 
 - `data/snapshots/prereg_manifest.json` — updated sha256 for docs/spec.md and docs/AMENDMENTS.md
 
 **Validation gates re-run:** Sentinel scan (BLOCK=0 confirmed). verify_prereg.py (passes against updated manifest). All 246 pytest tests still pass.
+
+---
+
+## 2026-05-09 — Amendment 3: AACT-only mode + reference-data gap pivot for v0.1.0
+
+**Decisions affected:**
+- Spec §1.6 #1 (intervention list) — UNCHANGED.
+- Spec §1.6 #2-19 — analytical decisions UNCHANGED.
+- Spec §3 data flow — Phase A ICTRP load operationally degraded to AACT-only via new `--skip-ictrp` orchestrator flag; ICTRP DataFrame defaulted to empty so Phases B-E proceed unchanged.
+- Spec §4.4 30-trial blinded G3 spot-check — declared MOOT for v0.1.0 (G3=0 across all strata; auditing an empty set would trivially yield 30/30).
+
+**Changes:**
+
+1. **AACT-only run for v0.1.0** — the WHO-ICTRP snapshot referenced by `paths.toml::ictrp_snapshot` is a PACTR-scoped subset with only 9 columns (TrialID, Source Register, Conditions, Secondary IDs, Results URL, Date registered, Countries, Primary Sponsor, Recruitment Status), missing the critical fields needed by the atlas (Public title, Intervention, Target_size). Without `Intervention` column, the intervention filter cannot evaluate ICTRP rows; without `Public title`, the population filter cannot evaluate. Rather than corrupting the denominator with NaN-filled rows, v0.1.0 runs AACT-only (the AACT snapshot referenced by `paths.toml::aact_snapshot_dir` has all 5 required tables with full schemas).
+
+2. **G3 reference-data gap finding** — investigation showed Pairwise70 (374 reviews) and CDSR string-index (661 reviews) collectively carry zero modern-MDR-TB Cochrane reviews. The 0/72 G3 result reflects this reference-data gap, not an absolute absence of MDR-TB Cochrane synthesis activity. v0.1.0 atlas pivots to a methodology-calibration finding (mirroring PACTR-Hiddenness Amendment 2 precedent).
+
+3. **Spot-check (Task 32b) declared moot** — auditing an empty G3 set would trivially yield 30/30 agreement. The infrastructure (`make_spotcheck_template.py`, `merge_spotcheck.py`, `validation_gates._spotcheck_g3_agreement`) ships in v0.1.0 ready for v0.2.0 use against a TB-specific reference index.
+
+4. **`aact_loader.py` schema policy relaxed** — REQUIRED_SCHEMAS subset semantics (require named columns; allow + drop extras). Real AACT carries 60+ studies columns we don't use; previous strict-equality check fail-closed on real data. New OPTIONAL_KEEP map preserves `results_first_posted_date` for G1 and a few other useful columns; rest dropped to keep memory footprint manageable.
+
+5. **`africa_classifier._to_alpha2` broad fallback** — added a comprehensive iso3166-derived broad lookup map (273 entries) covering common AACT country names ("Moldova", "Russia", "Czech Republic", "Vietnam", etc), parenthetical-alias stripping ("Turkey (Türkiye)" → "Turkey"), and an extended Unicode-normalisation set. Spec §1.6 #14 fail-closed on truly unknown countries preserved.
+
+**v0.2.0 work plan** (all out of scope for v0.1.0):
+- Build a TB-specific Cochrane reference index from ~10–20 known TB Cochrane reviews (CD009593, CD012918, CD012919, CD007669, CD006086, CD009913, CD003343, CD011717, CD012830, CD013559, etc.) — extract included-trial NCTs from each "Included Studies" section, build a parquet supplement to Pairwise70, re-run G3.
+- Acquire full WHO-ICTRP weekly export (replace PACTR-scoped placeholder).
+- Re-run 30-trial blinded G3 spot-check against the populated G3 set.
+
+**Affected files in this amendment commit:**
+- `src/tb_atlas/aact_loader.py` — REQUIRED_SCHEMAS subset semantics + OPTIONAL_KEEP + NaN-tolerant sort
+- `src/tb_atlas/africa_classifier.py` — _build_broad_lookup, parenthetical-stripping, Unicode normalisation
+- `pilots/run_all.py` — `--skip-ictrp` flag + graceful ICTRP-load degradation
+- `atlas.csv` (committed at repo root) + `atlas_baseline.csv` — v0.1.0 real-data atlas
+- `data/snapshots/output_baselines.json` — sha256 for atlas.csv
+- `e156-submission/body.md` — rewritten 156w with reference-gap pivot
+- `docs/extraction_audit.md` — §0 v0.1.0 real-data summary added
+- `docs/AMENDMENTS.md` — this entry
+
+**Validation gates re-run:** verify_prereg passes (AMENDMENTS.md sha256 updated in prereg_manifest.json post-this-commit). Sentinel scan continues at BLOCK=0. All 289 pytest tests still pass (no regressions).

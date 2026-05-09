@@ -28,3 +28,6 @@ sentinel-findings.jsonl
 sentinel-findings.sarif
 review-findings.md
 review-findings.jsonl
+
+# Test-generated paper fill output (fixture-derived)
+e156-submission/body.fixture.md

@@ -128,29 +128,122 @@ class UnknownCountryError(Exception):
     """Raised when a country string cannot be resolved to ISO-3166 alpha-2."""
 
 
+# Lazy-built broad lookup map from iso3166 (name + apolitical_name +
+# common short forms). Built once at first call.
+_BROAD_LOOKUP: dict | None = None
+
+
+def _build_broad_lookup() -> dict:
+    """Build a comprehensive {lowercase-name: alpha2} map from iso3166 plus
+    common short forms used by AACT facilities.country.
+    """
+    m: dict[str, str] = {}
+    try:
+        from iso3166 import countries
+        for c in countries:
+            m[c.name.lower()] = c.alpha2
+            if hasattr(c, "apolitical_name") and c.apolitical_name:
+                m[c.apolitical_name.lower()] = c.alpha2
+    except ImportError:
+        pass
+
+    # Common AACT short forms not covered by iso3166's official names.
+    short_forms = {
+        "moldova": "MD",
+        "russia": "RU",
+        "russian federation": "RU",
+        "czech republic": "CZ",
+        "czechia": "CZ",
+        "vietnam": "VN",
+        "viet nam": "VN",
+        "south korea": "KR",
+        "korea, south": "KR",
+        "north korea": "KP",
+        "korea, north": "KP",
+        "korea, democratic peoples republic of": "KP",
+        "taiwan": "TW",
+        "hong kong": "HK",
+        "macao": "MO",
+        "macau": "MO",
+        "iran": "IR",
+        "iran, islamic republic of": "IR",
+        "syria": "SY",
+        "syrian arab republic": "SY",
+        "macedonia": "MK",
+        "north macedonia": "MK",
+        "the former yugoslav republic of macedonia": "MK",
+        "bolivia": "BO",
+        "bolivia, plurinational state of": "BO",
+        "venezuela": "VE",
+        "venezuela, bolivarian republic of": "VE",
+        "tanzania": "TZ",
+        "tanzania, united republic of": "TZ",
+        "congo, the democratic republic of the": "CD",
+        "congo, democratic republic of the": "CD",
+        "democratic republic of the congo": "CD",
+        "drc": "CD",
+        "republic of the congo": "CG",
+        "lao peoples democratic republic": "LA",
+        "laos": "LA",
+        "palestinian territory": "PS",
+        "palestinian territory, occupied": "PS",
+        "palestine": "PS",
+        "brunei": "BN",
+        "brunei darussalam": "BN",
+        "east timor": "TL",
+        "timor-leste": "TL",
+        "micronesia": "FM",
+        "micronesia, federated states of": "FM",
+        "myanmar": "MM",
+        "burma": "MM",
+        "cape verde": "CV",
+        "cabo verde": "CV",
+        "swaziland": "SZ",
+        "eswatini": "SZ",
+    }
+    m.update(short_forms)
+    return m
+
+
 def _to_alpha2(name: str) -> str:
     if not name or not isinstance(name, str):
         raise UnknownCountryError(f"empty country: {name!r}")
     key = name.strip().lower()
-    # Normalise Unicode accented chars for the alias lookup (e.g. Cote d'Ivoire
-    # with macron over the e -> plain ascii for dict key comparison).
-    # We keep it simple: strip the macron variant via a targeted replacement so
-    # the alias dict only needs one key per entry.
+    # Strip parenthetical aliases (real AACT has e.g. "Turkey (Türkiye)").
+    if "(" in key:
+        import re
+        key = re.sub(r"\s*\([^)]*\)\s*", " ", key).strip()
+    # Normalise Unicode accented chars for the alias lookup.
     key_ascii = (
         key
-        .replace("ô", "o")   # o with circumflex: Cote
-        .replace("é", "e")   # e with acute
-        .replace("è", "e")   # e with grave
-        .replace("à", "a")   # a with grave
-        .replace("â", "a")   # a with circumflex
-        .replace("’", "'")   # right single quotation mark
-        .replace("ã", "a")   # a with tilde (Sao Tome)
+        .replace("ô", "o")
+        .replace("é", "e")
+        .replace("è", "e")
+        .replace("à", "a")
+        .replace("â", "a")
+        .replace("’", "'")
+        .replace("ã", "a")
+        .replace("ü", "u")
+        .replace("ö", "o")
+        .replace("ñ", "n")
+        .replace("í", "i")
+        .replace("á", "a")
+        .replace("ó", "o")
+        .replace("ç", "c")
     )
     if key_ascii in ALIAS:
         return ALIAS[key_ascii]
     if key in ALIAS:
         return ALIAS[key]
-    # Fall through to iso3166 package
+    # Broad fallback: iso3166 names + apolitical_names + common short forms.
+    global _BROAD_LOOKUP
+    if _BROAD_LOOKUP is None:
+        _BROAD_LOOKUP = _build_broad_lookup()
+    if key_ascii in _BROAD_LOOKUP:
+        return _BROAD_LOOKUP[key_ascii]
+    if key in _BROAD_LOOKUP:
+        return _BROAD_LOOKUP[key]
+    # Final attempt: iso3166's exact getter (covers a few edge cases).
     try:
         from iso3166 import countries
         c = countries.get(name.strip())

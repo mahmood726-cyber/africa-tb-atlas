@@ -1,5 +1,30 @@
 # Extraction audit
 
+## 0. v0.1.0 real-data run summary (2026-05-09)
+
+**Headline numbers** (AACT 2026-04-12 snapshot, ICTRP skipped per Amendment 3):
+- Denominator: 72 modern MDR/XDR-TB trials (start_date ≥ 2012-12-28, ≥1 of {Bdq, Pa, Lzd})
+- Africa-recruiting (≥1 site): 44 (61.1%); non-Africa: 28
+- Total enrollment: 19,614 trial-arm participants (Africa-recruiting: 14,931 / 76.1%)
+- G1 results-posted: 11/44 Africa, 4/28 non-Africa
+- G2 peer-published (Europe PMC): **40/44 (90.9%) Africa-recruiting; 20/28 (71.4%) non-Africa** — Africa publishes at HIGHER rate, inverting the conventional north-south discipline narrative
+- G3 in-Cochrane: **0/72 across all strata**
+
+**The G3=0 finding traces to a reference-data gap, not methodological pathology:**
+
+| Reference source | Total reviews | Modern MDR-TB reviews indexed |
+|---|---|---|
+| Pairwise70 `study_references.parquet` | 374 | 0 |
+| CDSR string-index `cdsr_string_index.sqlite` | 661 | 1 (CD009593 partial) |
+
+Spot-checked known TB Cochrane review IDs (CD012918, CD012919, CD007669, CD006086, CD009913, CD003343, CD011717, CD012830, CD013559) — **all absent from both reference sources**. Pairwise70 is a curated cross-condition subset; CDSR string-index has minimal TB content.
+
+**Implication for the v0.1.0 finding**: the published atlas surfaces a TB-blindness in the synthesis-audit infrastructure (Pairwise70 + CDSR string-index) used across the portfolio, NOT an absolute Cochrane-inclusion gap for African MDR-TB trials. v0.2.0 will rebuild the reference index against ~10–20 known TB-specific Cochrane reviews and re-run G3.
+
+**Spot-check (Task 32b) outcome**: declared moot for v0.1.0 — the reference-data gap means the auditable G3 set is empty, so a 30-trial blinded audit would trivially confirm 30/30 algorithm-vs-auditor agreement on "no Cochrane match." Documented in `data/snapshots/release_readiness.json` and AMENDMENTS.md Amendment 3.
+
+---
+
 ## 1. Drug-name confusables resolved
 
 The intervention filter (`src/tb_atlas/intervention_filter.py`) uses a
