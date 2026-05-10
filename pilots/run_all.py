@@ -149,6 +149,18 @@ def main() -> int:
 
     print("[D] G3: Cochrane match…", flush=True)
     pairwise70 = pd.read_parquet(paths.pairwise70_index)
+    # v0.2 supplement: TB-specific Cochrane reference index built via Playwright
+    # scrape of cochranelibrary.com. Merged with Pairwise70 at runtime so the
+    # atlas can match modern MDR-TB trials against TB-relevant Cochrane reviews
+    # that aren't in Pairwise70's curated 374-review subset.
+    tb_refs_path = Path("data/cochrane_tb_refs.parquet")
+    if tb_refs_path.exists():
+        tb_refs = pd.read_parquet(tb_refs_path)
+        n_before = len(pairwise70)
+        pairwise70 = pd.concat([pairwise70, tb_refs], ignore_index=True)
+        print(f"[D]   merged TB-Cochrane supplement: +{len(tb_refs)} rows "
+              f"({pairwise70.review_id.nunique()} distinct reviews; "
+              f"{n_before} -> {len(pairwise70)})")
     cdsr_strings = _load_cdsr_strings(paths.cdsr_string_index)
 
     g3_dicts = denom.apply(

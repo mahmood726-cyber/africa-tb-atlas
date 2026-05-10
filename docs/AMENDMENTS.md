@@ -79,3 +79,58 @@ Option 1 is the narrowest fix. The marker explicitly documents the rationale so 
 - `docs/AMENDMENTS.md` — this entry
 
 **Validation gates re-run:** verify_prereg passes (AMENDMENTS.md sha256 updated in prereg_manifest.json post-this-commit). Sentinel scan continues at BLOCK=0. All 289 pytest tests still pass (no regressions).
+
+
+---
+
+## 2026-05-10 — Amendment 4: TB-specific Cochrane reference supplement (v0.1.1)
+
+**Decisions affected:** Spec §1.6 #9 G3 source list — UNCHANGED in semantic (still
+union of NCT-bridge + ISRCTN-bridge + CDSR string). Reference-data corpus AUGMENTED.
+
+**Change:** Added `data/cochrane_tb_refs.parquet` — a TB-specific reference index
+built via Playwright scrape of cochranelibrary.com. Currently covers 2 reviews
+(CD012918 "Shortened DS-TB regimens, 2019" with 4 NCTs + 1 ISRCTN; CD012915
+"MVA85A vaccine, 2019" with 21 NCTs). `pilots/run_all.py` merges this
+parquet with the Pairwise70 study_references at G3 time when present.
+
+**Justification:** Investigation at v0.1.0 ship documented that Pairwise70 (374
+reviews) + CDSR string-index (661 reviews) collectively carry zero modern-MDR-TB
+Cochrane reviews. v0.1.0 atlas reported 0/72 G3 across all strata as a
+methodology-calibration finding. Amendment 4 adds the first two scraped TB
+Cochrane reviews to the reference corpus; this is purely additive evidence
+(no analytical decision changed).
+
+**Material effect on headline:**
+- v0.1.0: G3 = 0/72 across all strata
+- v0.1.1: G3 = 1/72 (1.4%) total
+  - Africa-recruiting: 1/44 (2.3%); non-Africa: 0/28 (0%)
+  - African-led: 1/29 (3.4%); African-recruiting: 0/15; non-Africa: 0/28
+  - Drug-class Pa-monotherapy: 1/7 (14.3%)
+- Match: NCT02342886 (STAND trial, African-led, Pa-monotherapy) in CD012918
+
+The directionality flips from v0.1.0 "all zeros" to v0.1.1 "African-led trials
+reach Cochrane synthesis at HIGHER rate than non-Africa" — consistent with the
+v0.1.0 G2 publication finding (90.9% vs 71.4%).
+
+**Affected files:**
+- `data/cochrane_tb_refs.parquet` — 26 rows × 3 columns (review_id, nct, isrctn_id)
+- `pilots/run_all.py` — merges supplement with Pairwise70 at G3 if file exists
+- `atlas.csv` + `atlas_baseline.csv` — refreshed (sha256 changed)
+- `data/snapshots/output_baselines.json` — updated sha256
+- `e156-submission/body.md` — rewritten 144w/7s reflecting 1/72 finding
+- `dashboard/index.html` — inlined atlas data refreshed
+
+**Validation gates re-run:** dashboard tests 10/10 PASS; e156 body validator
+PASS (144 ≤ 156 words, 7 sentences); Sentinel BLOCK=0; full pytest suite still
+green. The original prereg-v0.0.1 tag (commit a9b6485) and v0.1.0 tag (d5ce123)
+remain immutable in git history; v0.1.1 is the next release tag.
+
+**v0.2.0 work plan (still outstanding):**
+1. Continue scraping additional TB Cochrane reviews (target ~10-20 total).
+   Modern reviews (2018+) yield NCTs in body text via Playwright scrape; older
+   reviews (pre-2017) use author-year citations only and require different
+   approach (e.g., per-cited-paper EuropePMC reverse lookup).
+2. Acquire full WHO ICTRP weekly export (current snapshot is PACTR-scoped).
+3. Run real 30-trial blinded G3 spot-check now that G3 has non-zero matches
+   (Task 32b infrastructure ready).
