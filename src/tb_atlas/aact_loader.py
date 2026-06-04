@@ -4,9 +4,22 @@ AACT (Aggregate Analysis of ClinicalTrials.gov) ships pipe-delimited TSVs
 quarterly. Schema drifts between releases — fail closed on unrecognized
 columns rather than silently skip (per Lessons file 'AACT pipe-delim is
 fragile' note).
+
+Schema validation and the one-to-many list collapse are delegated to the shared
+``aact-kit`` package (``validate_columns`` / ``aggregate_lists`` /
+``ensure_list_columns``); the AACT-specific read semantics (``dtype=str``,
+``keep_default_na=False``) and the lead-sponsor selection stay here as domain
+logic. Install: ``pip install aact-kit`` (or ``pip install -e C:/Projects/aact-kit``).
 """
 from pathlib import Path
 import pandas as pd
+
+from aact_kit import (
+    AACTSchemaError,  # re-exported: same class aact_kit.validate_columns raises
+    aggregate_lists,
+    ensure_list_columns,
+    validate_columns,
+)
 
 REQUIRED_TABLES = ["studies", "interventions", "facilities", "conditions", "sponsors"]
 
@@ -37,29 +50,30 @@ OPTIONAL_KEEP = {
 }
 
 
-class AACTSchemaError(Exception):
-    """Raised when an AACT table is missing required columns (schema drift)."""
+# AACTSchemaError is imported from aact_kit (see module header) and raised by
+# aact_kit.validate_columns; re-exported here for backward-compatible imports.
+__all__ = [
+    "AACTSchemaError",
+    "REQUIRED_TABLES",
+    "REQUIRED_SCHEMAS",
+    "EXPECTED_SCHEMAS",
+    "OPTIONAL_KEEP",
+    "load_aact",
+]
 
 
 def _load_table(snapshot_dir: Path, table: str) -> pd.DataFrame:
     path = snapshot_dir / f"{table}.txt"
     if not path.exists():
         raise FileNotFoundError(f"AACT table missing: {path}")
+    # AACT-specific read: everything as strings, only "" is NA (so values like
+    # "NA"/"null" survive as literal text). Type coercion happens in load_aact.
     df = pd.read_csv(path, sep="|", dtype=str, keep_default_na=False, na_values=[""])
-    required = REQUIRED_SCHEMAS[table]
-    actual = set(df.columns)
-    missing = required - actual
-    if missing:
-        raise AACTSchemaError(
-            f"{table}.txt missing required columns: {missing}. "
-            f"AACT schema may have drifted; update REQUIRED_SCHEMAS after audit."
-        )
-    # Subset semantics: keep required + optional, drop the rest. Real AACT
-    # carries 60+ studies columns we don't use; preserving the full table
-    # bloats memory by ~5x without benefit.
-    keep = required | OPTIONAL_KEEP.get(table, set())
-    keep = keep & actual  # only columns that actually exist
-    return df[sorted(keep)]
+    # Fail closed on missing required columns and project to required+optional
+    # (sorted, byte-stable) via the shared validator.
+    return validate_columns(
+        df, f"{table}.txt", REQUIRED_SCHEMAS[table], OPTIONAL_KEEP.get(table, set())
+    )
 
 
 def load_aact(snapshot_dir) -> pd.DataFrame:
@@ -97,26 +111,15 @@ def load_aact(snapshot_dir) -> pd.DataFrame:
     conditions = _load_table(snapshot_dir, "conditions")
     sponsors = _load_table(snapshot_dir, "sponsors")
 
-    # Collapse one-to-many joins to lists.
-    # Sort all list-valued aggregations for byte-stable output (spec §3.2).
-    # AACT row order can drift between releases; downstream filters are order-insensitive.
-    # Drop NaN / coerce to str before sorting (real AACT has null name rows
-    # that would crash sorted() with TypeError on float vs str comparison).
-    interventions_grp = (
-        interventions.groupby("nct_id")["name"]
-        .apply(lambda s: sorted(s.dropna().astype(str)))
-        .rename("interventions")
+    # Collapse one-to-many joins to lists via the shared aggregator (sorts,
+    # drops NaN, coerces to str for byte-stable output — spec §3.2). Note
+    # interventions keep duplicates (dedup=False) to match prior behavior;
+    # countries/conditions are deduped.
+    interventions_grp = aggregate_lists(
+        interventions, "name", dedup=False, name="interventions"
     )
-    countries_grp = (
-        facilities.groupby("nct_id")["country"]
-        .apply(lambda s: sorted(set(s.dropna().astype(str))))
-        .rename("countries")
-    )
-    conditions_grp = (
-        conditions.groupby("nct_id")["name"]
-        .apply(lambda s: sorted(set(s.dropna().astype(str))))
-        .rename("conditions")
-    )
+    countries_grp = aggregate_lists(facilities, "country", name="countries")
+    conditions_grp = aggregate_lists(conditions, "name", name="conditions")
 
     # Lead sponsor only (filter before join to avoid duplicating rows)
     lead = (
@@ -141,7 +144,6 @@ def load_aact(snapshot_dir) -> pd.DataFrame:
 
     # Ensure list columns are never NaN (trials with no facilities/interventions
     # get empty list rather than float NaN)
-    for col in ["interventions", "countries", "conditions"]:
-        out[col] = out[col].apply(lambda x: x if isinstance(x, list) else [])
+    out = ensure_list_columns(out, ["interventions", "countries", "conditions"])
 
     return out

@@ -5,6 +5,7 @@ description = "African TB Trial Atlas — Cochrane-inclusion gap audit for moder
 requires-python = ">=3.13"
 license = { text = "MIT" }
 dependencies = [
+    "aact-kit>=0.1.0",
     "pandas>=2.2",
     "pyarrow>=16.0",
     "requests>=2.32",
