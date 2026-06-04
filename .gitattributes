@@ -1,0 +1,49 @@
+# Git attributes — enforce consistent line endings at the git level,
+# so Windows editors stop producing CRLF<->LF churn in git status/diffs.
+
+# Auto-detect text files; normalize to LF in the index and on checkout.
+* text=auto eol=lf
+
+# Explicit LF for source / data-text (overrides system core.autocrlf).
+*.py    text eol=lf
+*.pyi   text eol=lf
+*.txt   text eol=lf
+*.csv   text eol=lf
+*.tsv   text eol=lf
+*.html  text eol=lf
+*.css   text eol=lf
+*.js    text eol=lf
+*.yaml  text eol=lf
+*.yml   text eol=lf
+*.json  text eol=lf
+*.toml  text eol=lf
+*.cfg   text eol=lf
+*.ini   text eol=lf
+*.md    text eol=lf
+*.sh    text eol=lf
+*.r     text eol=lf
+*.R     text eol=lf
+
+# Windows-native scripts keep CRLF
+*.bat   text eol=crlf
+*.cmd   text eol=crlf
+*.ps1   text eol=crlf
+
+# Binary — never normalize (parquet/rda especially: line-ending edits corrupt them)
+*.parquet binary
+*.rda     binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.ico   binary
+*.pdf   binary
+*.zip   binary
+*.gz    binary
+*.tar   binary
+*.db    binary
+*.sqlite binary
+*.pkl   binary
+*.npz   binary
+*.xlsx  binary
+*.xls   binary
