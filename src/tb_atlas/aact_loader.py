@@ -9,7 +9,7 @@ Schema validation and the one-to-many list collapse are delegated to the shared
 ``aact-kit`` package (``validate_columns`` / ``aggregate_lists`` /
 ``ensure_list_columns``); the AACT-specific read semantics (``dtype=str``,
 ``keep_default_na=False``) and the lead-sponsor selection stay here as domain
-logic. Install: ``pip install aact-kit`` (or ``pip install -e C:/Projects/aact-kit``).
+logic. Install: ``pip install aact-kit`` (or an editable local aact-kit checkout).
 """
 from pathlib import Path
 import pandas as pd

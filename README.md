@@ -20,6 +20,18 @@ python -m pilots.preflight
 python -m pilots.run_all --fixture-mode  # smoke test
 ```
 
+## Data and release checks
+
+Registry deduplication accepts filtered or repeated dataframe index labels and
+does not match missing identifiers. Missing pandas values and null-text markers
+do not count as posted results.
+
+Run the release dry-run with `python scripts/release_v010.py` on Windows or
+POSIX systems. Skipped research prerequisites still mean release is pending.
+Attributes exceptions for `docs/AMENDMENTS.md`, `atlas.csv` and
+`atlas_baseline.csv` preserve their original CRLF bytes and existing hashes;
+registered content, data values and hash manifests have not changed.
+
 ## License
 
 MIT — see LICENSE.

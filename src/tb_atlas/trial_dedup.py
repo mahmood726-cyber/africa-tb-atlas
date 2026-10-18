@@ -44,8 +44,14 @@ def dedup_trials(aact: pd.DataFrame, ictrp: pd.DataFrame) -> tuple[pd.DataFrame,
         raise DedupConflictError. The dedup cannot pick a winner without
         manual review.
     """
-    aact = aact.copy()
-    ictrp = ictrp.copy()
+    # Filtering preserves arbitrary or duplicate labels. Use positional indexes
+    # internally so iloc and dropping matches refer to the same rows.
+    aact = aact.reset_index(drop=True).copy()
+    ictrp = ictrp.reset_index(drop=True).copy()
+    for frame in (aact, ictrp):
+        for kind in _ID_PRIORITY:
+            if kind in frame.columns:
+                frame[kind] = frame[kind].fillna("")
     if "source" not in aact.columns:
         aact["source"] = "aact"
     if "source" not in ictrp.columns:
@@ -65,7 +71,7 @@ def dedup_trials(aact: pd.DataFrame, ictrp: pd.DataFrame) -> tuple[pd.DataFrame,
 
         if match is None:
             log_rows.append({
-                "trial_id": (r.get("nct_id") or r.get("isrctn_id") or r.get("euctr_id")),
+                "trial_id": (r.get("nct_id") or r.get("isrctn_id") or r.get("euctr_id") or ""),
                 "decision": "kept_ictrp_only",
                 "via": "",
             })

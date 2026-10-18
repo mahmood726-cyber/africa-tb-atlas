@@ -1,10 +1,11 @@
-"""Smoke tests for scripts/release_v010.sh."""
+"""Smoke tests for the portable release gate."""
 import subprocess
+import sys
 from pathlib import Path
 import pytest
 
 REPO = Path(__file__).parent.parent
-SCRIPT = REPO / "scripts/release_v010.sh"
+SCRIPT = REPO / "scripts/release_v010.py"
 
 
 def test_release_script_exists_and_executable():
@@ -17,7 +18,7 @@ def test_release_script_dry_run_succeeds_or_skips():
     Should NOT exit non-zero unless an evaluable precondition genuinely fails.
     """
     r = subprocess.run(
-        ["bash", str(SCRIPT)],
+        [sys.executable, str(SCRIPT)],
         cwd=REPO, capture_output=True, text=True
     )
     # Allow exit 0 (all-pass-or-skip) — fail only if FAIL printed
@@ -42,7 +43,7 @@ def test_release_script_runs_validate_e156_body_when_body_exists():
     if not body.exists():
         pytest.skip("body.md not generated yet")
     r = subprocess.run(
-        ["bash", str(SCRIPT)],
+        [sys.executable, str(SCRIPT)],
         cwd=REPO, capture_output=True, text=True
     )
     assert "(e)" in r.stdout
@@ -62,7 +63,7 @@ def test_release_script_skips_atlas_baseline_check_when_absent():
     if (REPO / "atlas.csv").exists():
         pytest.skip("atlas.csv present (Task 27 may have completed)")
     r = subprocess.run(
-        ["bash", str(SCRIPT)],
+        [sys.executable, str(SCRIPT)],
         cwd=REPO, capture_output=True, text=True
     )
     assert "[SKIP] (c)" in r.stdout, r.stdout
@@ -71,7 +72,7 @@ def test_release_script_skips_atlas_baseline_check_when_absent():
 def test_release_script_dashboard_tests_pass():
     """(g) should be PASS (Task 28 dashboard is shipped + tested)."""
     r = subprocess.run(
-        ["bash", str(SCRIPT)],
+        [sys.executable, str(SCRIPT)],
         cwd=REPO, capture_output=True, text=True
     )
     # The line should say [PASS] (g)
@@ -81,7 +82,7 @@ def test_release_script_dashboard_tests_pass():
 def test_release_script_sentinel_block_zero():
     """(h) should be PASS (Sentinel BLOCK=0 after Amendment 2 skip-file marker)."""
     r = subprocess.run(
-        ["bash", str(SCRIPT)],
+        [sys.executable, str(SCRIPT)],
         cwd=REPO, capture_output=True, text=True
     )
     assert "[PASS] (h)" in r.stdout, r.stdout
@@ -90,7 +91,7 @@ def test_release_script_sentinel_block_zero():
 def test_release_script_no_fail_on_clean_repo():
     """Dry-run should report 0 FAIL on a clean repo state (Tasks 27/32b deferred)."""
     r = subprocess.run(
-        ["bash", str(SCRIPT)],
+        [sys.executable, str(SCRIPT)],
         cwd=REPO, capture_output=True, text=True
     )
     assert "FAIL: 0" in r.stdout, (

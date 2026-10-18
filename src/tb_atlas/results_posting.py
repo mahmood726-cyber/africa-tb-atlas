@@ -18,19 +18,10 @@ def has_results_posted(row) -> bool:
     """
     source = row.get("source", "")
 
-    if source == "aact":
-        v = row.get("results_first_posted_date")
-        if v is None:
-            return False
-        if isinstance(v, float) and pd.isna(v):
-            return False
-        s = str(v).strip()
-        return bool(s) and s.lower() != "nat" and s.lower() != "none"
-
-    if source == "ictrp":
-        url = row.get("result_url", "")
-        if isinstance(url, float) and pd.isna(url):
-            return False
-        return bool(str(url).strip())
-
-    return False
+    if not isinstance(source, str) or source not in {"aact", "ictrp"}:
+        return False
+    field = "results_first_posted_date" if source == "aact" else "result_url"
+    value = row.get(field)
+    if value is None or pd.isna(value):
+        return False
+    return str(value).strip().lower() not in {"", "none", "nan", "nat", "<na>"}

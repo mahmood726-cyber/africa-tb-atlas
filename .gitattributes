@@ -20,6 +20,11 @@
 *.cfg   text eol=lf
 *.ini   text eol=lf
 *.md    text eol=lf
+# Preserve this registered document's original CRLF bytes and stamped digest.
+docs/AMENDMENTS.md text eol=crlf
+# Recorded output hashes also use CRLF bytes; preserve the existing baselines.
+/atlas.csv text eol=crlf
+/atlas_baseline.csv text eol=crlf
 *.sh    text eol=lf
 *.r     text eol=lf
 *.R     text eol=lf
